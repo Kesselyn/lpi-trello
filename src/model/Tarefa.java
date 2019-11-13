@@ -16,7 +16,10 @@ public class Tarefa {
 		this(0, null, null, "", "", 0, "", "");
 	}
 	
-	public Tarefa(int identificadorTarefa, Usuario usuario, Projeto projeto, String titulo, String descricao, int ordem, String estado, String nivelPrioridade) {
+	public Tarefa(int identificadorTarefa, Usuario usuario, Projeto projeto, 
+					String titulo, String descricao, int ordem, String estado, 
+					String nivelPrioridade) {
+		
 		this.identificadorTarefa = identificadorTarefa;
 		this.usuario = usuario;
 		this.projeto = projeto;

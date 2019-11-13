@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Projeto {
+public class Projeto2 {
 	private int identificadorProjeto;
 	private String nomeProjeto;
 	private String lista;
@@ -11,19 +11,13 @@ public class Projeto {
 	private ArrayList <Tarefa> tarefas;
 	
 	//Construtor:
-	public Projeto() {
+	public Projeto2() {
 		this(0, "", "", null, null, null);
 	}
 	
-	//construtor para o banco sem id e outras coisas
-	public Projeto(  String nomeProjeto, String lista,   Usuario usuarioProprietario) {	 
-		this.nomeProjeto = nomeProjeto;
-		this.lista = lista;
-		this.usuarioProprietario = usuarioProprietario;
-		 
-	}
+	 
 	
-	public Projeto(int identificadorProjeto, String nomeProjeto, String lista, ArrayList <Usuario> usuarios, Usuario usuarioProprietario, ArrayList <Tarefa> tarefas) {
+	public Projeto2(int identificadorProjeto, String nomeProjeto, String lista, ArrayList <Usuario> usuarios, Usuario usuarioProprietario, ArrayList <Tarefa> tarefas) {
 		this.identificadorProjeto = identificadorProjeto;
 		this.nomeProjeto = nomeProjeto;
 		this.lista = lista;
