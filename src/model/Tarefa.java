@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Tarefa {
 	
 	private int identificadorTarefa;

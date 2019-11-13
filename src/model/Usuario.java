@@ -16,16 +16,19 @@ public class Usuario {
     
     //Construtor:
     public Usuario() {
-        this("", "", "", "", "", null);
+        this("", "", "", "", "", null, null, null, null);
     }
     
-    public Usuario (String apelido, String nomeUsuario, String email, String senha, String telefone, File foto) {
+    public Usuario (String apelido, String nomeUsuario, String email, String senha, String telefone, File foto, ArrayList <Mensagem> mensagens, ArrayList <Projeto> projetos, ArrayList <Tarefa> tarefas) {
         this.apelido = apelido;
         this.nomeUsuario = nomeUsuario;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.foto = foto;
+        this.mensagens = mensagens;
+        this.projetos = projetos;
+        this.tarefas = tarefas;
     }
 
     //M?todos de acessos:
@@ -53,6 +56,18 @@ public class Usuario {
        return this.foto;
     }
     
+    public ArrayList <Mensagem> getMensagens() {
+    	return mensagens;
+    }
+    
+    public ArrayList <Projeto> getProjetos() {
+    	return projetos;
+    }
+    
+    public ArrayList <Tarefa> getTarefas() {
+    	return tarefas;
+    }
+    
     //Metodos modificadores:
     public void setApelido(String apelido) {
         this.apelido = apelido;
@@ -76,5 +91,17 @@ public class Usuario {
 
     public void setFoto(File foto) {
         this.foto = foto;
+    }
+    
+    public void setMensagens(ArrayList <Mensagem> mensagens) {
+    	this.mensagens = mensagens;
+    }
+    
+    public void setProjetos(ArrayList <Projeto> projetos) {
+    	this.projetos = projetos;
+    }
+    
+    public void setTarefas(ArrayList <Tarefa> tarefas) {
+    	this.tarefas = tarefas;
     }
 }

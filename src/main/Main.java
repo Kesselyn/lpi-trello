@@ -1,7 +1,6 @@
 package main;
 
 import java.io.File;
-import java.util.GregorianCalendar;
 
 import dao.Conexao;
 import dao.MensagemDAO;
@@ -12,12 +11,13 @@ import model.Usuario;
 public class Main {
 	public static void main(String[] args) {
 		Conexao.conectar();
-		Usuario u = new Usuario("kess4", "kesselyn", "keselyn@gmail.br", "1234", "4002-8922", new File("rato.jpg"));
-		Usuario u2 = new Usuario("kess5", "kesselyn", "keselyn@hotmail.com.br", "1234", "4002-8922", new File("rato.jpg"));
+		Usuario u = new Usuario("kss6", "kesselyn", "kselyn@gail.br", "1234", "4002-8922", new File("rato.jpg"), null, null, null);
+		Usuario u2 = new Usuario("ess9", "kesselyn", "eselyn@htmail.com.br", "1234", "4002-8922", new File("rato.jpg"), null, null, null);
 		
 		//inserção do usuario certissima
 		try {
 			UsuarioDAO teste = new UsuarioDAO(Conexao.conectar());
+			teste.createUsuario(u2);
 			teste.createUsuario(u);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -25,7 +25,7 @@ public class Main {
 		
 		try {
 			MensagemDAO teste = new MensagemDAO(Conexao.conectar());
-			teste.createMensagem(new Mensagem(u, u2, "oi", "enviada", new GregorianCalendar(), new GregorianCalendar()));
+			teste.createMensagem(new Mensagem(u, u2, "oi", "enviada", null, null));
 		} catch(Exception e) {
 			System.err.println("Não inseriu na model: " + e.getMessage());
 			e.printStackTrace();

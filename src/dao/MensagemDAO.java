@@ -1,9 +1,6 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 import model.Mensagem;
 
@@ -22,17 +19,14 @@ public class MensagemDAO {
 	public void createMensagem(Mensagem mensagem) {
 		String create = "INSERT INTO mensagem(texto_mensagem, "
 				+ "		estado_mensagem, data_hora_envio, data_hora_visualizacao, remetente, destinatario )"
-				+ " 	VALUES (?, ?, ?, ?, ?,?)";
+				+ " 	VALUES (?, ?, now(), null, ?,?)";
 		 
 		try(PreparedStatement pst = conexao.prepareStatement(create)) {
-			Date dataHoraEnvio = new Date(mensagem.getDataHoraEnvio().getTimeInMillis());
-			Date dataHoraVisualizacao = new Date(mensagem.getDataHoraVisualizacao().getTimeInMillis());
+			
 			pst.setString(1, mensagem.getTexto());
 			pst.setString(2, mensagem.getEstado());
-			pst.setDate(3, dataHoraEnvio);
-			pst.setDate(4, dataHoraVisualizacao);
-			pst.setObject(5, mensagem.getRemetente());
-			pst.setObject(6, mensagem.getDestinatario());
+			pst.setString(3, mensagem.getRemetente().getApelido());
+			pst.setString(4, mensagem.getDestinatario().getApelido());
 			
 			pst.execute();
 		}
@@ -46,4 +40,5 @@ public class MensagemDAO {
 			e.printStackTrace();
 		}
 	}
+	
 }

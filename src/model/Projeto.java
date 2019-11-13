@@ -3,24 +3,25 @@ package model;
 import java.util.ArrayList;
 
 public class Projeto {
-	private int identificadorProjeto; //deixar ou não?
+	private int identificadorProjeto;
 	private String nomeProjeto;
 	private String lista;
-	private Usuario usuario; //perguntar pro igor
+	private ArrayList <Usuario> usuarios;
 	private Usuario usuarioProprietario;
-	private ArrayList <Tarefa> tarefas; //Arrays estão certos?
+	private ArrayList <Tarefa> tarefas;
 	
 	//Construtor:
 	public Projeto() {
-		this(0, "", "", null, null);
+		this(0, "", "", null, null, null);
 	}
 	
-	public Projeto(int identificadorProjeto, String nomeProjeto, String lista, Usuario usuario, Usuario usuarioProprietario) {
+	public Projeto(int identificadorProjeto, String nomeProjeto, String lista, ArrayList <Usuario> usuarios, Usuario usuarioProprietario, ArrayList <Tarefa> tarefas) {
 		this.identificadorProjeto = identificadorProjeto;
 		this.nomeProjeto = nomeProjeto;
 		this.lista = lista;
-		this.usuario = usuario;
+		this.usuarios = usuarios;
 		this.usuarioProprietario = usuarioProprietario;
+		this.tarefas = tarefas;
 	}
 	
 	//Getters:
@@ -36,12 +37,16 @@ public class Projeto {
 		return lista;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public ArrayList <Usuario> getUsuarios() {
+		return usuarios;
 	}
 
 	public Usuario getUsuarioProprietario() {
 		return usuarioProprietario;
+	}
+	
+	public ArrayList <Tarefa> getTarefas() {
+		return tarefas;
 	}
 	
 	//Setters:
@@ -58,12 +63,16 @@ public class Projeto {
 	}
 
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarios(ArrayList <Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	public void setUsuarioProprietario(Usuario usuarioProprietario) {
 		this.usuarioProprietario = usuarioProprietario;
+	}
+	
+	public void setTarefas(ArrayList <Tarefa> tarefas) {
+		this.tarefas = tarefas;
 	}
 	
 }
