@@ -16,6 +16,7 @@ import model.Usuario;
 public class Main {
 	public static void main(String[] args) {
 		Conexao.conectar();
+		
 		//Listas
 		ArrayList <Tarefa> listaTarefa = new ArrayList<>();
 		ArrayList <Usuario> listaUsuario = new ArrayList<>();
@@ -36,6 +37,8 @@ public class Main {
 			UsuarioDAO teste = new UsuarioDAO(Conexao.conectar());
 			teste.createUsuario(u2);
 			teste.createUsuario(u);
+			u = new Usuario("gfhft", "Juliana", "aigmail@doido.com", "554321", "455-555", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
+			teste.updateUsuario(u);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
