@@ -23,7 +23,7 @@ public class Main {
 		// ArrayList <Projeto> listaProjeto = new ArrayList<>();
 		// ArrayList <Mensagem> listaMensagem = new ArrayList<>();
 		
-		// Criando dois usuarios para poder usar como remetente e destinatário depois
+		// Criando dois usuarios para poder usar como remetente e destinatário depois na tabela de mensagem
 		Usuario u = new Usuario("agffhagfrwft", "kegsselyn", "afggrth@fgrtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), null, null, null);
 		Usuario u2 = new Usuario("arffgssh5t", "jugvens", "atu@hfgrhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), null, null, null);
 
@@ -68,7 +68,7 @@ public class Main {
 			//Create projeto
 			teste.createProjeto(p);
 
-			//Update projeto
+			//Update projeto, passando o id manualmente para poder excluir na tabela um registro ja existente
 			p = new Projeto(1,"Times do Chile", "Continua em andamento", u, null, null);
 			teste.updateProjeto(p);
 
@@ -83,6 +83,10 @@ public class Main {
 			//Create tarefa
 			teste.createTarefa(t);
 
+			//Update tarefa, passando o id manualmente para poder excluir na tabela um registro ja existente
+			t = new Tarefa(1, "Jogar mais", "Ganhar esse negocio mesmo", 1, "A fazendo", "Altissima", u, p);
+			teste.updateTarefa(t);
+			
 		} catch(Exception e) {
 			System.err.println("Não inseriu na model: " + e.getMessage());
 			e.printStackTrace();

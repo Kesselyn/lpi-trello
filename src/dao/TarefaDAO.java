@@ -42,4 +42,33 @@ public class TarefaDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void updateTarefa(Tarefa tarefa) {
+		String update = "UPDATE tarefa SET titulo_tarefa = ?, descricao_tarefa = ?, nivel_prioridade = ?, estado_tarefa = ?, ordem_tarefa = ?, fk_usuario = ?, fk_projeto = ? WHERE id_tarefa = ?";
+
+		try(PreparedStatement pst = conexao.prepareStatement(update)) {
+			
+			pst.setString(1, tarefa.getTitulo());
+			pst.setString(2, tarefa.getDescricao());
+			pst.setString(3, tarefa.getNivelPrioridade());
+			pst.setString(4, tarefa.getEstado());
+			pst.setInt(5, tarefa.getOrdem());
+			pst.setString(6, tarefa.getUsuario().getApelido());
+			pst.setInt(7, tarefa.getProjeto().getIdentificadorProjeto());
+			pst.setInt(8, tarefa.getidentificadorTarefa());
+			
+			int linhasAfetadas = pst.executeUpdate();
+			System.out.println("Done Kesselyn! Rows affected: " + linhasAfetadas);
+			if (pst.executeUpdate() == 0) {
+				System.err.println(" Não existe contato com esse ID. ");
+			}
+
+		} catch(SQLException e) {
+			System.err.println("Falha no banco : " + e.getMessage());
+			e.printStackTrace();
+		} catch(Exception e) {
+			System.err.println("Falha no java: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }
