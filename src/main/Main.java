@@ -29,7 +29,7 @@ public class Main {
 		Projeto p = new Projeto(0,"Times do Brasil", "Em andamento",listaUsuario,u, listaTarefa);
 //		listaProjeto.add(0,p);
 		
-		Tarefa t = new Tarefa(0, u, p, "Times de São Paulo", "Nomes de times localizados em são paulo",1, "A fazer", "Alto" );
+		Tarefa t = new Tarefa(0, u, p, "Times de Sï¿½o Paulo", "Nomes de times localizados em sï¿½o paulo",1, "A fazer", "Alto" );
 //		listaTarefa.add(0,t);
 		
 		try {
@@ -44,7 +44,7 @@ public class Main {
 			MensagemDAO teste = new MensagemDAO(Conexao.conectar());
 			teste.createMensagem(new Mensagem(u, u2, "oi", "enviada", null, null));
 		} catch(Exception e) {
-			System.err.println("Não inseriu na model: " + e.getMessage());
+			System.err.println("NÃ£o inseriu na model: " + e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -52,7 +52,7 @@ public class Main {
 			ProjetoDAO teste = new ProjetoDAO(Conexao.conectar());
 			teste.createProjeto(p);
 		} catch(Exception e) {
-			System.err.println("Não inseriu na model: " + e.getMessage());
+			System.err.println("NÃ£o inseriu na model: " + e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -60,7 +60,7 @@ public class Main {
 			TarefaDAO teste = new TarefaDAO(Conexao.conectar());
 			teste.createTarefa(t);
 		} catch(Exception e) {
-			System.err.println("Não inseriu na model: " + e.getMessage());
+			System.err.println("NÃ£o inseriu na model: " + e.getMessage());
 			e.printStackTrace();
 		}
 		
