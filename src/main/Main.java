@@ -16,12 +16,13 @@ import model.Usuario;
 public class Main {
 	public static void main(String[] args) {
 		Conexao.conectar();
+		
 		//Listas
 		ArrayList <Tarefa> listaTarefa = new ArrayList<>();
 		ArrayList <Usuario> listaUsuario = new ArrayList<>();
 		ArrayList <Projeto> listaProjeto = new ArrayList<>();
 		ArrayList <Mensagem> listaMensagem = new ArrayList<>();
-		Mensagem m = null;
+		// Mensagem m = null;
 		
 		Usuario u = new Usuario("gfhft", "kesselyn", "th@grtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
 		Usuario u2 = new Usuario("rffht", "juvens", "tu@hhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
@@ -29,13 +30,15 @@ public class Main {
 		Projeto p = new Projeto(0,"Times do Brasil", "Em andamento",listaUsuario,u, listaTarefa);
 //		listaProjeto.add(0,p);
 		
-		Tarefa t = new Tarefa(0, u, p, "Times de S�o Paulo", "Nomes de times localizados em s�o paulo",1, "A fazer", "Alto" );
+		Tarefa t = new Tarefa(0, u, p, "Times de São Paulo", "Nomes de times localizados em s�o paulo", 1, "A fazer", "Alto" );
 //		listaTarefa.add(0,t);
 		
 		try {
 			UsuarioDAO teste = new UsuarioDAO(Conexao.conectar());
 			teste.createUsuario(u2);
 			teste.createUsuario(u);
+			u = new Usuario("gfhft", "Juliana", "aigmail@doido.com", "554321", "455-555", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
+			teste.updateUsuario(u);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
