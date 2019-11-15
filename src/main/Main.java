@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import dao.Conexao;
 import dao.MensagemDAO;
 import dao.ProjetoDAO;
-import dao.TarefaDAO;
+// import dao.TarefaDAO;
 import dao.UsuarioDAO;
 import model.Mensagem;
 import model.Projeto;
@@ -19,7 +19,7 @@ public class Main {
 		
 		//Listas
 		ArrayList <Tarefa> listaTarefa = new ArrayList<>();
-		ArrayList <Usuario> listaUsuario = new ArrayList<>();
+		// ArrayList <Usuario> listaUsuario = new ArrayList<>();
 		ArrayList <Projeto> listaProjeto = new ArrayList<>();
 		ArrayList <Mensagem> listaMensagem = new ArrayList<>();
 		// Mensagem m = null;
@@ -27,16 +27,20 @@ public class Main {
 		Usuario u = new Usuario("gfhft", "kesselyn", "th@grtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
 		Usuario u2 = new Usuario("rffht", "juvens", "tu@hhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
 
-		Projeto p = new Projeto(0,"Times do Brasil", "Em andamento",listaUsuario,u, listaTarefa);
+		Projeto p = new Projeto(0,"Times do Brasil", "Em andamento", u, null, null);
 //		listaProjeto.add(0,p);
 		
-		Tarefa t = new Tarefa(0, u, p, "Times de São Paulo", "Nomes de times localizados em s�o paulo", 1, "A fazer", "Alto" );
+		// Tarefa t = new Tarefa(0, u, p, "Times de São Paulo", "Nomes de times localizados em s�o paulo", 1, "A fazer", "Alto" );
 //		listaTarefa.add(0,t);
 		
 		try {
 			UsuarioDAO teste = new UsuarioDAO(Conexao.conectar());
+
+			//Crate de usuario
 			teste.createUsuario(u2);
 			teste.createUsuario(u);
+			
+			//Update de usuario
 			u = new Usuario("gfhft", "Juliana", "aigmail@doido.com", "554321", "455-555", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
 			teste.updateUsuario(u);
 		} catch(Exception e) {
@@ -53,19 +57,26 @@ public class Main {
 		
 		try {
 			ProjetoDAO teste = new ProjetoDAO(Conexao.conectar());
+
+			//Create projeto
 			teste.createProjeto(p);
+
+			//Update projeto
+			p = new Projeto(1,"Times do Chile", "Continua em andamento", u, null, null);
+			teste.updateProjeto(p);
+			
 		} catch(Exception e) {
 			System.err.println("Não inseriu na model: " + e.getMessage());
 			e.printStackTrace();
 		}
 		
-		try {
-			TarefaDAO teste = new TarefaDAO(Conexao.conectar());
-			teste.createTarefa(t);
-		} catch(Exception e) {
-			System.err.println("Não inseriu na model: " + e.getMessage());
-			e.printStackTrace();
-		}
+		// try {
+		// 	TarefaDAO teste = new TarefaDAO(Conexao.conectar());
+		// 	teste.createTarefa(t);
+		// } catch(Exception e) {
+		// 	System.err.println("Não inseriu na model: " + e.getMessage());
+		// 	e.printStackTrace();
+		// }
 		
 	}
 }

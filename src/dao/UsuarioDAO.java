@@ -43,9 +43,9 @@ public class UsuarioDAO {
 	}
 
 	public void updateUsuario(Usuario usuario) {
-		String create = "UPDATE usuario SET nome_usuario = ?, email_usuario = ?, senha_usuario=?, telefone_usuario=?, foto=?  WHERE apelido_usuario = ?";
+		String update = "UPDATE usuario SET nome_usuario = ?, email_usuario = ?, senha_usuario=?, telefone_usuario=?, foto=?  WHERE apelido_usuario = ?";
 		
-		try(PreparedStatement pst = conexao.prepareStatement(create)) {
+		try(PreparedStatement pst = conexao.prepareStatement(update)) {
 			
 			FileInputStream inputStream = new FileInputStream(usuario.getFoto());
 			

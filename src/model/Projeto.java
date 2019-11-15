@@ -6,8 +6,8 @@ public class Projeto {
 	private int identificadorProjeto;
 	private String nomeProjeto;
 	private String lista;
-	private ArrayList <Usuario> usuarios;
 	private Usuario usuarioProprietario;
+	private ArrayList <Usuario> usuarios;
 	private ArrayList <Tarefa> tarefas;
 	
 	//Construtor:
@@ -15,20 +15,13 @@ public class Projeto {
 		this(0, "", "", null, null, null);
 	}
 	
-	//construtor para o banco sem id e outras coisas
-	public Projeto(  String nomeProjeto, String lista,   Usuario usuarioProprietario) {	 
-		this.nomeProjeto = nomeProjeto;
-		this.lista = lista;
-		this.usuarioProprietario = usuarioProprietario;
-		 
-	}
-	
-	public Projeto(int identificadorProjeto, String nomeProjeto, String lista, ArrayList <Usuario> usuarios, Usuario usuarioProprietario, ArrayList <Tarefa> tarefas) {
+	//construtor para o banco sem id e outras coisas	
+	public Projeto(int identificadorProjeto, String nomeProjeto, String lista, Usuario usuarioProprietario, ArrayList <Usuario> usuarios, ArrayList <Tarefa> tarefas) {
 		this.identificadorProjeto = identificadorProjeto;
 		this.nomeProjeto = nomeProjeto;
 		this.lista = lista;
-		this.usuarios = usuarios;
 		this.usuarioProprietario = usuarioProprietario;
+		this.usuarios = usuarios;
 		this.tarefas = tarefas;
 	}
 	
@@ -44,13 +37,13 @@ public class Projeto {
 	public String getLista() {
 		return lista;
 	}
+	
+		public Usuario getUsuarioProprietario() {
+			return usuarioProprietario;
+		}
 
 	public ArrayList <Usuario> getUsuarios() {
 		return usuarios;
-	}
-
-	public Usuario getUsuarioProprietario() {
-		return usuarioProprietario;
 	}
 	
 	public ArrayList <Tarefa> getTarefas() {
@@ -69,14 +62,13 @@ public class Projeto {
 	public void setLista(String lista) {
 		this.lista = lista;
 	}
-
+	
+	public void setUsuarioProprietario(Usuario usuarioProprietario) {
+		this.usuarioProprietario = usuarioProprietario;
+	}
 
 	public void setUsuarios(ArrayList <Usuario> usuarios) {
 		this.usuarios = usuarios;
-	}
-
-	public void setUsuarioProprietario(Usuario usuarioProprietario) {
-		this.usuarioProprietario = usuarioProprietario;
 	}
 	
 	public void setTarefas(ArrayList <Tarefa> tarefas) {
