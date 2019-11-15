@@ -3,38 +3,56 @@ package model;
 public class Tarefa {
 	
 	private int identificadorTarefa;
-	private Usuario usuario;
-	private Projeto projeto;
 	private String titulo;
 	private String descricao;
 	private int ordem;
 	private String estado;
 	private String nivelPrioridade;
+	private Usuario usuario;
+	private Projeto projeto;
 	
 	//Construtores:	
 	public Tarefa() {
-		this(0, null, null, "", "", 0, "", "");
+		this(0, "", "", 0, "", "", null, null);
 	}
 	
-	public Tarefa(int identificadorTarefa, Usuario usuario, Projeto projeto, 
-					String titulo, String descricao, int ordem, String estado, 
-					String nivelPrioridade) {
+	public Tarefa(int identificadorTarefa, String titulo, String descricao, int ordem, String estado, String nivelPrioridade, Usuario usuario, Projeto projeto) {
 		
 		this.identificadorTarefa = identificadorTarefa;
-		this.usuario = usuario;
-		this.projeto = projeto;
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.ordem = ordem;
 		this.estado = estado;
 		this.nivelPrioridade = nivelPrioridade;
+		this.usuario = usuario;
+		this.projeto = projeto;
 	}
 
 	//Getters:
 	public int getidentificadorTarefa() {
 		return identificadorTarefa;
 	}
-
+	
+	public String getTitulo() {
+		return titulo;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	public int getOrdem() {
+		return ordem;
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+	
+	public String getNivelPrioridade() {
+		return nivelPrioridade;
+	}
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -43,29 +61,29 @@ public class Tarefa {
 		return projeto;
 	}
 
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public int getOrdem() {
-		return ordem;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public String getNivelPrioridade() {
-		return nivelPrioridade;
-	}
-
 	//Setters:
 	public void setidentificadorTarefa(int identificadorTarefa) {
 		this.identificadorTarefa = identificadorTarefa;
+	}
+	
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+	
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
+	}
+	
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	public void setNivelPrioridade(String nivelPrioridade) {
+		this.nivelPrioridade = nivelPrioridade;
 	}
 
 	public void setUsuario(Usuario usuario) {
@@ -74,25 +92,5 @@ public class Tarefa {
 
 	public void setProjeto(Projeto projeto) {
 		this.projeto = projeto;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public void setOrdem(int ordem) {
-		this.ordem = ordem;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public void setNivelPrioridade(String nivelPrioridade) {
-		this.nivelPrioridade = nivelPrioridade;
 	}
 }

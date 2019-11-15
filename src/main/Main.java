@@ -1,12 +1,12 @@
 package main;
 
 import java.io.File;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
 import dao.Conexao;
 import dao.MensagemDAO;
 import dao.ProjetoDAO;
-// import dao.TarefaDAO;
+import dao.TarefaDAO;
 import dao.UsuarioDAO;
 import model.Mensagem;
 import model.Projeto;
@@ -18,20 +18,23 @@ public class Main {
 		Conexao.conectar();
 		
 		//Listas
-		ArrayList <Tarefa> listaTarefa = new ArrayList<>();
+		// ArrayList <Tarefa> listaTarefa = new ArrayList<>();
 		// ArrayList <Usuario> listaUsuario = new ArrayList<>();
-		ArrayList <Projeto> listaProjeto = new ArrayList<>();
-		ArrayList <Mensagem> listaMensagem = new ArrayList<>();
-		// Mensagem m = null;
+		// ArrayList <Projeto> listaProjeto = new ArrayList<>();
+		// ArrayList <Mensagem> listaMensagem = new ArrayList<>();
 		
-		Usuario u = new Usuario("gfhft", "kesselyn", "th@grtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
-		Usuario u2 = new Usuario("rffht", "juvens", "tu@hhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
+		// Criando dois usuarios para poder usar como remetente e destinatário depois
+		Usuario u = new Usuario("agffhagfrwft", "kegsselyn", "afggrth@fgrtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), null, null, null);
+		Usuario u2 = new Usuario("arffgssh5t", "jugvens", "atu@hfgrhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), null, null, null);
 
-		Projeto p = new Projeto(0,"Times do Brasil", "Em andamento", u, null, null);
-//		listaProjeto.add(0,p);
+		// Criando uma mensaem
+		Mensagem m = new Mensagem(u, u2, "oi2", "enviada", null, null);
+
+		// Criando um projeto, o id passado não é usado para cria-lo pois ele é auto icrement, mas sim para usar como FK na tabela tarefa
+		Projeto p = new Projeto(1,"Times do Brasil", "Em andamento", u, null, null);
 		
-		// Tarefa t = new Tarefa(0, u, p, "Times de São Paulo", "Nomes de times localizados em s�o paulo", 1, "A fazer", "Alto" );
-//		listaTarefa.add(0,t);
+		// Criando uma tarefa, o id passado não é usado para cria-lo pois ele é auto icrement, por isso pode-se passar 0 como default
+		Tarefa t = new Tarefa(0, "Jogar", "Ganhar esse negocio", 1, "A fazer", "Alto", u, p);
 		
 		try {
 			UsuarioDAO teste = new UsuarioDAO(Conexao.conectar());
@@ -41,15 +44,19 @@ public class Main {
 			teste.createUsuario(u);
 			
 			//Update de usuario
-			u = new Usuario("gfhft", "Juliana", "aigmail@doido.com", "554321", "455-555", new File("rato.jpg"), listaMensagem, listaProjeto, listaTarefa);
+			u = new Usuario("arffgssh5t", "Juliana2", "aaigmanyil@doido.com", "554321", "455-555", new File("rato.jpg"), null, null, null);
 			teste.updateUsuario(u);
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		try {
 			MensagemDAO teste = new MensagemDAO(Conexao.conectar());
-			teste.createMensagem(new Mensagem(u, u2, "oi", "enviada", null, null));
+			
+			//Crate mensagem
+			teste.createMensagem(m);
+
 		} catch(Exception e) {
 			System.err.println("Não inseriu na model: " + e.getMessage());
 			e.printStackTrace();
@@ -64,19 +71,22 @@ public class Main {
 			//Update projeto
 			p = new Projeto(1,"Times do Chile", "Continua em andamento", u, null, null);
 			teste.updateProjeto(p);
-			
+
 		} catch(Exception e) {
 			System.err.println("Não inseriu na model: " + e.getMessage());
 			e.printStackTrace();
 		}
 		
-		// try {
-		// 	TarefaDAO teste = new TarefaDAO(Conexao.conectar());
-		// 	teste.createTarefa(t);
-		// } catch(Exception e) {
-		// 	System.err.println("Não inseriu na model: " + e.getMessage());
-		// 	e.printStackTrace();
-		// }
+		try {
+			TarefaDAO teste = new TarefaDAO(Conexao.conectar());
+			
+			//Create tarefa
+			teste.createTarefa(t);
+
+		} catch(Exception e) {
+			System.err.println("Não inseriu na model: " + e.getMessage());
+			e.printStackTrace();
+		}
 		
 	}
 }
