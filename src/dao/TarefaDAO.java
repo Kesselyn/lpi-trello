@@ -71,4 +71,25 @@ public class TarefaDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public void deleteTarefa(Tarefa tarefa) {
+		String delete = " DELETE FROM tarefa WHERE id_tarefa = ?";
+		
+		try(PreparedStatement pst = conexao.prepareStatement(delete)) {
+			
+			pst.setInt(1, tarefa.getidentificadorTarefa());
+			
+			pst.execute();
+		}
+		
+		catch(SQLException e) {
+			System.err.println("Falha no delete do banco: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		catch(Exception e) {
+			System.err.println("Falha no delete no java: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

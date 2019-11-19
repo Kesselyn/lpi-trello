@@ -60,4 +60,25 @@ public class ProjetoDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public void deleteProjeto(Projeto projeto) {
+		String delete = " DELETE FROM projeto WHERE id_projeto = ?";
+		
+		try(PreparedStatement pst = conexao.prepareStatement(delete)) {
+			
+			pst.setInt(1, projeto.getIdentificadorProjeto());
+			
+			pst.execute();
+		}
+		
+		catch(SQLException e) {
+			System.err.println("Falha no delete do banco: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		catch(Exception e) {
+			System.err.println("Falha no delete no java: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

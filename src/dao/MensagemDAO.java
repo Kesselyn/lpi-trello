@@ -40,5 +40,26 @@ public class MensagemDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public void deleteMensagem(Mensagem mensagem) {
+		String delete = "DELETE FROM mensagem WHERE id_mensagem = ?";
+		
+		try(PreparedStatement pst = conexao.prepareStatement(delete)) {
+			
+			pst.setInt(1, mensagem.getIdentificadorMensagem());
+			
+			pst.execute();
+		}
+			
+		catch(SQLException e) {
+			System.err.println("Falha delete mensagem no banco: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		catch(Exception e) {
+			System.err.println("Falha delete mensagem no java: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 	
 }

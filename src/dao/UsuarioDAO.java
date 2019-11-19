@@ -70,5 +70,25 @@ public class UsuarioDAO {
 			System.err.println("Falha no java: " + e.getMessage());
 			e.printStackTrace();
 		}
-	}	
+	}
+
+	public void deleteUsuario (Usuario usuario) {
+		String delete = "DELETE FROM usuario WHERE apelido_usuario = ?";
+		
+		try(PreparedStatement pst = conexao.prepareStatement(delete)) {
+			
+			System.out.print("Aqui:" + usuario.getApelido());
+
+			pst.setString(1, usuario.getApelido());
+			
+			pst.execute();
+			
+		} catch(SQLException e) {
+			System.err.println("Falha na exclusão no Banco: " + e.getMessage());
+			e.printStackTrace();
+		} catch(Exception e) {
+			System.err.println("Falha no java: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

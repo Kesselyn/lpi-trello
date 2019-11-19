@@ -3,6 +3,7 @@ package model;
 import java.util.GregorianCalendar;
 
 public class Mensagem {
+    private int identificadorMensagem;
     private Usuario destinatario;
     private Usuario remetente;
     private String texto;
@@ -12,10 +13,11 @@ public class Mensagem {
 
     //Construtores:
     public Mensagem() {
-        this(null, null, "", "", null, null);
+        this(0, null, null, "", "", null, null);
     }
     
-    public Mensagem (Usuario destinatario, Usuario remetente, String texto, String estado, GregorianCalendar dataHoraVisualizacao, GregorianCalendar dataHoraEnvio) {
+    public Mensagem (int identificadorMensagem, Usuario destinatario, Usuario remetente, String texto, String estado, GregorianCalendar dataHoraVisualizacao, GregorianCalendar dataHoraEnvio) {
+        this.identificadorMensagem = identificadorMensagem;
         this.destinatario = destinatario;
         this.remetente = remetente;
         this.texto = texto;
@@ -25,6 +27,10 @@ public class Mensagem {
     }
 
     //Metodos de acessos:
+    public int getIdentificadorMensagem() {
+        return this.identificadorMensagem;
+    }
+
     public Usuario getDestinatario() {
         return this.destinatario;
     }
@@ -50,6 +56,10 @@ public class Mensagem {
     }
     
     //Metodos modificadores:
+    public void setIdentificadorMensagem(int identificadorMensagem) {
+        this.identificadorMensagem = identificadorMensagem;
+    }
+
     public void setDestinatario(Usuario destinatario) {
         this.destinatario = destinatario;
     }
