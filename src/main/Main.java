@@ -3,6 +3,7 @@ package main;
 import java.io.File;
 // import java.util.ArrayList;
 
+import dao.AlocaUsuarioProjetoDAO;
 import dao.Conexao;
 import dao.MensagemDAO;
 import dao.ProjetoDAO;
@@ -12,6 +13,7 @@ import model.Mensagem;
 import model.Projeto;
 import model.Tarefa;
 import model.Usuario;
+import model.AlocaUsuarioProjeto;
 
 public class Main {
 	public static void main(String[] args) {
@@ -36,6 +38,9 @@ public class Main {
 		// Criando uma tarefa, o id passado não é usado para cria-lo pois ele é auto icrement, mas sim para usar no delete depois
 		Tarefa t = new Tarefa(1, "Jogar", "Ganhar esse negocio", 1, "A fazer", "Alto", u, p);
 		
+		//Criando a inserção de um usuario em um projeto, o id é passado para ser usado posteriormente no delete
+		AlocaUsuarioProjeto a = new AlocaUsuarioProjeto(1, u2, p);
+
 		try {
 			UsuarioDAO teste = new UsuarioDAO(Conexao.conectar());
 
@@ -97,12 +102,25 @@ public class Main {
 			// teste.updateTarefa(t);
 
 			//Delete Tarefa
-			teste.deleteTarefa(t);
+			// teste.deleteTarefa(t);
 			
 		} catch(Exception e) {
 			System.err.println("Não inseriu na model: " + e.getMessage());
 			e.printStackTrace();
 		}
-		
+
+		try {
+			AlocaUsuarioProjetoDAO teste = new AlocaUsuarioProjetoDAO(Conexao.conectar());
+			
+			//Create AlocaUsuarioProjeto
+			teste.createAlocaUsuarioProjeto(a);
+
+			//Delete AlocaUsuarioProjeto
+			teste.deleteAlocaUsuarioProjeto(a);
+			
+		} catch(Exception e) {
+			System.err.println("Não inseriu na model: " + e.getMessage());
+			e.printStackTrace();
+		}		
 	}
 }
