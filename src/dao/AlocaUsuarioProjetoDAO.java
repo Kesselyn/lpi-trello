@@ -60,8 +60,13 @@ public class AlocaUsuarioProjetoDAO {
 		}
     }
     
+ 
     //A classe È do tipo array de projetos pois È o tipo que quero retornar
     //Ela recebe AlocaProjetoUsuario como par‚metro pq È onde est„o os dados que vou utilizar na consulta
+ 
+    //A classe √© do tipo array de projetos pois √© o tipo que quero retornar
+    //Ela recebe AlocaProjetoUsuario como par√¢metro pq √© onde est√£o os dados que vou utilizar na consulta
+
     public ArrayList <Projeto> readProjetosUsuario(AlocaUsuarioProjeto alocaUsuarioProjeto) {
 		
         String consulta = "SELECT id_projeto, nome_projeto, lista_coluna, usuario_proprietario "
@@ -78,7 +83,11 @@ public class AlocaUsuarioProjetoDAO {
             ResultSet resultado = pst.executeQuery();
             
             //Array que vai guardar os dados que eu quero buscar
+
             //como quero apenas dados do projeto o array ser· do tipo projeto
+
+            //como quero apenas dados do projeto o array ser√° do tipo projeto
+
             ArrayList<Projeto> projetos = new ArrayList();
             
             Projeto projeto = null;
@@ -112,7 +121,11 @@ public class AlocaUsuarioProjetoDAO {
             
         }
         catch (SQLException ex) {
+
             // Se acontecer alguma exceÁ„o imprima a pilha de erros
+
+            // Se acontecer alguma exce√ß√£o imprima a pilha de erros
+
             ex.printStackTrace();
         }
         

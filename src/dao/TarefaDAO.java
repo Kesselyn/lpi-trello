@@ -97,17 +97,17 @@ public class TarefaDAO {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList <Tarefa> readTarefa(Projeto projeto) {
+	public  ArrayList <Tarefa> readTarefa(Projeto projeto) {
 		String consulta = "Select * from tarefa where fk_projeto= ?";
-		Tarefa tarefa = null;
+		
 		try(PreparedStatement pst = conexao.prepareStatement(consulta)){
 			
-			pst.setInt(1, tarefa.getProjeto().getIdentificadorProjeto());
+			pst.setInt(1, projeto.getIdentificadorProjeto());
 			
 			ResultSet resultado = pst.executeQuery();
 			
 			ArrayList<Tarefa> tarefas = new ArrayList();
-			
+			Tarefa tarefa = null;
 			Usuario usuario = null;
 			projeto = null;
 			while(resultado.next()) {
@@ -115,6 +115,7 @@ public class TarefaDAO {
 				usuario = new Usuario();
 				projeto = new Projeto();
 			
+				int idTarefa = resultado.getInt("id_tarefa");
 				String titulo = resultado.getString("titulo_tarefa");
 				String descricao = resultado.getString("descricao_tarefa");
 				String nivelPrioridade = resultado.getString("nivel_prioridade");
@@ -126,6 +127,7 @@ public class TarefaDAO {
 				usuario.setApelido(apelidoUsuario);
 				projeto.setIdentificadorProjeto(idProjeto);
 				
+				tarefa.setIdentificadorTarefa(idTarefa);
 				tarefa.setTitulo(titulo);
 				tarefa.setDescricao(descricao);
 				tarefa.setNivelPrioridade(nivelPrioridade);
