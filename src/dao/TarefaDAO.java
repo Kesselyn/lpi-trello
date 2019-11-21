@@ -1,12 +1,8 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-  
+
 import model.Projeto;
 import model.Tarefa;
 import model.Usuario;
@@ -22,7 +18,7 @@ public class TarefaDAO {
 	public TarefaDAO(Connection conexao) {
 		this.conexao = conexao;
 	}
-	 
+	/**/
 	public void createTarefa(Tarefa tarefa) {
 		String create = "INSERT INTO tarefa(titulo_tarefa, descricao_tarefa, nivel_prioridade, estado_tarefa, ordem_tarefa, fk_usuario, fk_projeto)"
 				+ " VALUES (?,?,?,?,?,?,?)";
@@ -60,7 +56,7 @@ public class TarefaDAO {
 			pst.setInt(5, tarefa.getOrdem());
 			pst.setString(6, tarefa.getUsuario().getApelido());
 			pst.setInt(7, tarefa.getProjeto().getIdentificadorProjeto());
-			pst.setInt(8, tarefa.getidentificadorTarefa());
+			pst.setInt(8, tarefa.getIdentificadorTarefa());
 			
 			int linhasAfetadas = pst.executeUpdate();
 			System.out.println("Done Kesselyn! Rows affected: " + linhasAfetadas);
@@ -82,7 +78,7 @@ public class TarefaDAO {
 		
 		try(PreparedStatement pst = conexao.prepareStatement(delete)) {
 			
-			pst.setInt(1, tarefa.getidentificadorTarefa());
+			pst.setInt(1, tarefa.getIdentificadorTarefa());
 			
 			pst.execute();
 		}
@@ -97,6 +93,7 @@ public class TarefaDAO {
 			e.printStackTrace();
 		}
 	}
+
 	public  ArrayList <Tarefa> readTarefa(Projeto projeto) {
 		String consulta = "Select * from tarefa where fk_projeto= ?";
 		
@@ -141,16 +138,12 @@ public class TarefaDAO {
 			return tarefas;
 		}
 		catch (SQLException ex) {
-            // Se acontecer alguma exceção imprima a pilha de erros
+            // Se acontecer alguma exceÃ§Ã£o imprima a pilha de erros
             ex.printStackTrace();
         }
         
         // se acontecer algum problema
         return null;
-		
-		 
- 		
-		
+				
 	}
 }
-	
