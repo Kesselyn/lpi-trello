@@ -242,4 +242,71 @@ public class AlocaUsuarioProjetoDAO {
         // se acontecer algum problema
         return null;
     }
+public ArrayList <Usuario> readUsuarioAusenteProjeto(AlocaUsuarioProjeto alocaUsuarioProjeto) {
+		
+        String consulta = "SELECT apelido_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, foto"
+                            + " FROM aloca_usuario_projeto AS A"
+                            + " INNER JOIN usuario AS U"
+                            + " ON A.fk_usuario = U.apelido_usuario"
+                            + " AND fk_projeto != ?";
+        
+        try (PreparedStatement pst = conexao.prepareStatement(consulta)) {
+            
+            pst.setInt(1, alocaUsuarioProjeto.getProjeto().getIdentificadorProjeto());
+            
+            //executando a busca
+            ResultSet resultado = pst.executeQuery();
+            
+            //Array que vai guardar os dados que eu quero buscar
+            //como quero apenas dados do projeto o array será do tipo projeto
+            ArrayList<Usuario> usuarios = new ArrayList();
+            
+            Usuario usuario = null;
+            
+            //Percorrendo todas as linhas retornadas do banco de dados
+            while (resultado.next()) {
+                usuario = new Usuario();
+
+                
+                // pegando os valores da linha da vez:
+                String apelidoUsuario = resultado.getString("apelido_usuario");
+                String nomeUsuario = resultado.getString("nome_usuario");
+                String emailUsuario = resultado.getString("email_usuario");
+                String senhaUsuario = resultado.getString("senha_usuario");
+                String telefoneUsuario = resultado.getString("telefone_usuario"); 
+                
+                // InputStream initialStream  = resultado.getBinaryStream("foto");
+                // byte[] buffer = new byte[initialStream.available()];
+                // initialStream.read(buffer);
+            
+                // File targetFile = new File("foto.jpg");
+                // OutputStream outStream = new FileOutputStream(targetFile);
+                // outStream.write(buffer);
+                // outStream.flush();
+                // outStream.close();
+                
+                //inserindo os dados nos objetos para serem colocados no array depois
+                usuario.setApelido(apelidoUsuario);
+                usuario.setNomeUsuario(nomeUsuario);
+                usuario.setEmail(emailUsuario);
+                usuario.setSenha(senhaUsuario);
+                usuario.setTelefone(telefoneUsuario);
+                // usuario.setFoto(new File("foto.jpg"));
+
+                //Adicionando o objeto da vez ArrayList
+                usuarios.add(usuario);
+            }
+            
+            //retorno do array com os dados
+            return usuarios;
+            
+        }
+        catch (SQLException ex) {
+            // Se acontecer alguma exceção imprima a pilha de erros
+            ex.printStackTrace();
+        }
+        
+        // se acontecer algum problema
+        return null;
+    }
 }
