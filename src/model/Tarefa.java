@@ -29,7 +29,7 @@ public class Tarefa {
 	}
 
 	//Getters:
-	public int getidentificadorTarefa() {
+	public int getIdentificadorTarefa() {
 		return identificadorTarefa;
 	}
 	
@@ -62,7 +62,7 @@ public class Tarefa {
 	}
 
 	//Setters:
-	public void setidentificadorTarefa(int identificadorTarefa) {
+	public void setIdentificadorTarefa(int identificadorTarefa) {
 		this.identificadorTarefa = identificadorTarefa;
 	}
 	

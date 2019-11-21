@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import dao.Conexao;
 // import dao.MensagemDAO;
 // import dao.ProjetoDAO;
-// import dao.TarefaDAO;
+import dao.TarefaDAO;
 // import dao.UsuarioDAO;
 // import model.Mensagem;
 import model.Projeto;
-// import model.Tarefa;
+import model.Tarefa;
 import model.Usuario;
 import model.AlocaUsuarioProjeto;
 
@@ -29,7 +29,7 @@ public class Main {
 		// Mensagem m = new Mensagem(1, u, u2, "oi2", "enviada", null, null);
 
 		// Criando um projeto, o id passado não é usado para cria-lo pois ele é auto icrement, mas sim para usar como FK na tabela tarefa
-		Projeto p = new Projeto(1,"Times do Brasil", "Em andamento", u, null, null);
+		Projeto p = new Projeto(1,"Times do Brasil", "Em andamento", u2, null, null);
 		
 		// // Criando uma tarefa, o id passado não é usado para cria-lo pois ele é auto icrement, mas sim para usar no delete depois
 		// Tarefa t = new Tarefa(1, "Jogar", "Ganhar esse negocio", 1, "A fazer", "Alto", u, p);
@@ -121,13 +121,31 @@ public class Main {
 		
 		AlocaUsuarioProjetoDAO teste = new AlocaUsuarioProjetoDAO(Conexao.conectar());
 
-		ArrayList<Projeto> retorno = teste.readProjetosUsuario(a);
+		// //Array com os projetos em que o usuários está
+		// ArrayList<Projeto> retorno = teste.readProjetosUsuario(a);
 		
-		System.out.println("Total de linhas encontradas:" + retorno.size());
-		//percorrendo o arraylist de retorno
-		for(Projeto t : retorno) { 
-			System.out.println("id: " + t.getIdentificadorProjeto() + " nome: "+ t.getNomeProjeto() + " coluna: "+ t.getLista() + " idProp: "+ t.getUsuarioProprietario().getApelido());
-		}
+		// //Array com os projetos que o usuário é proprietátio
+		// ArrayList<Projeto> retorno = teste.readProjetosADM(p);
+		
+		// System.out.println("Total de linhas encontradas:" + retorno.size());
+		// //percorrendo o arraylist de retorno
+		// for(Projeto t : retorno) { 
+		// 	System.out.println("id: " + t.getIdentificadorProjeto() + " nome: "+ t.getNomeProjeto() + " coluna: "+ t.getLista() + " idProp: "+ t.getUsuarioProprietario().getApelido());
+		// }
+		
+		// ArrayList<Usuario> retorno = teste.readUsuarioProjeto(a);
 
+		// System.out.println("Total de linhas encontradas:" + retorno.size());
+		// for(Usuario t : retorno) { 
+		// 	System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
+		// }
+
+		TarefaDAO testar = new TarefaDAO(Conexao.conectar());
+		ArrayList<Tarefa> tarefas = testar.readTarefa(p);
+		
+		for(Tarefa zig : tarefas) { 
+			System.out.println(" id: " + zig.getIdentificadorTarefa() + ", titulo: "+ zig.getTitulo() + ", descricao  "+ zig.getDescricao() + ", nivel prioridade "+ zig.getNivelPrioridade() +", estado "+zig.getEstado()+", ordem "+zig.getOrdem()+
+									", apelido  usuario " +zig.getUsuario().getApelido()+", id projeto "+ zig.getProjeto().getIdentificadorProjeto());
+		}
 	}
 }
