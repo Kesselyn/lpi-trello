@@ -1,126 +1,53 @@
 package main;
 
-import java.io.File;
-// import java.util.ArrayList;
-
 import dao.AlocaUsuarioProjetoDAO;
+
+import java.io.File;
+import java.util.ArrayList;
+
+// import dao.AlocaUsuarioProjetoDAO;
 import dao.Conexao;
-import dao.MensagemDAO;
-import dao.ProjetoDAO;
-import dao.TarefaDAO;
-import dao.UsuarioDAO;
-import model.Mensagem;
+// import dao.MensagemDAO;
+// import dao.ProjetoDAO;
+// import dao.TarefaDAO;
+// import dao.UsuarioDAO;
+// import model.Mensagem;
 import model.Projeto;
-import model.Tarefa;
+// import model.Tarefa;
 import model.Usuario;
 import model.AlocaUsuarioProjeto;
 
 public class Main {
 	public static void main(String[] args) {
 		Conexao.conectar();
-		
-		//Listas
-		// ArrayList <Tarefa> listaTarefa = new ArrayList<>();
-		// ArrayList <Usuario> listaUsuario = new ArrayList<>();
-		// ArrayList <Projeto> listaProjeto = new ArrayList<>();
-		// ArrayList <Mensagem> listaMensagem = new ArrayList<>();
-		
-		// Criando dois usuarios para poder usar como remetente e destinat√°rio depois na tabela de mensagem
+
+		// Criando dois usuarios para poder usar como remetente e destinat·rio depois na tabela de mensagem
 		Usuario u = new Usuario("kess", "kesselyn", "afggrth@fgrtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), null, null, null);
-		Usuario u2 = new Usuario("kess2", "kesselyn2", "atu@hfgrhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), null, null, null);
+		Usuario u2 = new Usuario("vit", "kesselyn2", "atu@hfgrhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), null, null, null);
 
-		// Criando uma mensaem, passando o id para poder usar na exclus√£o depois
-		Mensagem m = new Mensagem(1, u, u2, "oi2", "enviada", null, null);
+		// // Criando uma mensaem, passando o id para poder usar na exclus„o depois
+		// Mensagem m = new Mensagem(1, u, u2, "oi2", "enviada", null, null);
 
-		// Criando um projeto, o id passado n√£o √© usado para cria-lo pois ele √© auto icrement, mas sim para usar como FK na tabela tarefa
+		// Criando um projeto, o id passado n„o È usado para cria-lo pois ele È auto icrement, mas sim para usar como FK na tabela tarefa
 		Projeto p = new Projeto(1,"Times do Brasil", "Em andamento", u, null, null);
 		
-		// Criando uma tarefa, o id passado n√£o √© usado para cria-lo pois ele √© auto icrement, mas sim para usar no delete depois
-		Tarefa t = new Tarefa(1, "Jogar", "Ganhar esse negocio", 1, "A fazer", "Alto", u, p);
+		// // Criando uma tarefa, o id passado n„o È usado para cria-lo pois ele È auto icrement, mas sim para usar no delete depois
+		// Tarefa t = new Tarefa(1, "Jogar", "Ganhar esse negocio", 1, "A fazer", "Alto", u, p);
 		
-		//Criando a inser√ß√£o de um usuario em um projeto, o id √© passado para ser usado posteriormente no delete
+		//Criando a inserÁ„o de um usuario em um projeto, o id È passado para ser usado posteriormente no delete
 		AlocaUsuarioProjeto a = new AlocaUsuarioProjeto(1, u2, p);
 
-		try {
-			UsuarioDAO teste = new UsuarioDAO(Conexao.conectar());
+		AlocaUsuarioProjetoDAO teste = new AlocaUsuarioProjetoDAO(Conexao.conectar());
 
-			//Crate do usuario
-			teste.createUsuario(u2);
-			teste.createUsuario(u);
-			
-			//Update do usuario
-			// u = new Usuario("arffgssh5t", "Juliana2", "aaigmanyil@doido.com", "554321", "455-555", new File("rato.jpg"), null, null, null);
-			// teste.updateUsuario(u);
-
-			//Delete do usuario
-			// teste.deleteUsuario(u);
-
-		} catch(Exception e) {
-			e.printStackTrace();
+		ArrayList<Projeto> retorno = teste.readProjetosUsuario(a);
+		
+		System.out.println("Total de linhas encontradas:" + retorno.size());
+		//percorrendo o arraylist de retorno
+		for(Projeto t : retorno) { 
+			System.out.println("id: " + t.getIdentificadorProjeto() + " nome: "+ t.getNomeProjeto() + " coluna: "+ t.getLista() + " idProp: "+ t.getUsuarioProprietario().getApelido());
 		}
 		
-		try {
-			MensagemDAO teste = new MensagemDAO(Conexao.conectar());
-			
-			//Crate mensagem
-			teste.createMensagem(m);
-
-			//Delete mensagem
-			// teste.deleteMensagem(m);
-
-		} catch(Exception e) {
-			System.err.println("N√£o inseriu na model: " + e.getMessage());
-			e.printStackTrace();
-		}
 		
-		try {
-			ProjetoDAO teste = new ProjetoDAO(Conexao.conectar());
 
-			//Create projeto
-			teste.createProjeto(p);
-
-			//Update projeto, passando o id manualmente para poder excluir na tabela um registro ja existente
-			// p = new Projeto(1,"Times do Chile", "Continua em andamento", u, null, null);
-			// teste.updateProjeto(p);
-
-			//Delete projeto
-			// teste.deleteProjeto(p);
-
-		} catch(Exception e) {
-			System.err.println("N√£o inseriu na model: " + e.getMessage());
-			e.printStackTrace();
-		}
-		
-		try {
-			TarefaDAO teste = new TarefaDAO(Conexao.conectar());
-			
-			//Create tarefa
-			teste.createTarefa(t);
-
-			//Update tarefa, passando o id manualmente para poder excluir na tabela um registro ja existente
-			// t = new Tarefa(1, "Jogar mais", "Ganhar esse negocio mesmo", 1, "A fazendo", "Altissima", u, p);
-			// teste.updateTarefa(t);
-
-			//Delete Tarefa
-			// teste.deleteTarefa(t);
-			
-		} catch(Exception e) {
-			System.err.println("N√£o inseriu na model: " + e.getMessage());
-			e.printStackTrace();
-		}
-
-		try {
-			AlocaUsuarioProjetoDAO teste = new AlocaUsuarioProjetoDAO(Conexao.conectar());
-			
-			//Create AlocaUsuarioProjeto
-			teste.createAlocaUsuarioProjeto(a);
-
-			//Delete AlocaUsuarioProjeto
-			teste.deleteAlocaUsuarioProjeto(a);
-			
-		} catch(Exception e) {
-			System.err.println("N√£o inseriu na model: " + e.getMessage());
-			e.printStackTrace();
-		}		
 	}
 }
