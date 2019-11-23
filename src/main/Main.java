@@ -1,17 +1,18 @@
 package main;
 
 import dao.AlocaUsuarioProjetoDAO;
-
+import java.util.GregorianCalendar;
 import java.io.File;
 import java.util.ArrayList;
 
 // import dao.AlocaUsuarioProjetoDAO;
 import dao.Conexao;
+import dao.MensagemDAO;
 // import dao.MensagemDAO;
 // import dao.ProjetoDAO;
 import dao.TarefaDAO;
 // import dao.UsuarioDAO;
-// import model.Mensagem;
+import model.Mensagem;
 import model.Projeto;
 import model.Tarefa;
 import model.Usuario;
@@ -119,7 +120,7 @@ public class Main {
 		// 	e.printStackTrace();
 		// }
 		
-		AlocaUsuarioProjetoDAO teste = new AlocaUsuarioProjetoDAO(Conexao.conectar());
+		// AlocaUsuarioProjetoDAO teste = new AlocaUsuarioProjetoDAO(Conexao.conectar());
 
 		// //Array com os projetos em que o usuários está
 		// ArrayList<Projeto> retorno = teste.readProjetosUsuario(a);
@@ -140,12 +141,25 @@ public class Main {
 		// 	System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
 		// }
 
-		TarefaDAO testar = new TarefaDAO(Conexao.conectar());
-		ArrayList<Tarefa> tarefas = testar.readTarefa(p);
+		// TarefaDAO testar = new TarefaDAO(Conexao.conectar());
+		// ArrayList<Tarefa> tarefas = testar.readTarefa(p);
 		
-		for(Tarefa zig : tarefas) { 
-			System.out.println(" id: " + zig.getIdentificadorTarefa() + ", titulo: "+ zig.getTitulo() + ", descricao  "+ zig.getDescricao() + ", nivel prioridade "+ zig.getNivelPrioridade() +", estado "+zig.getEstado()+", ordem "+zig.getOrdem()+
-									", apelido  usuario " +zig.getUsuario().getApelido()+", id projeto "+ zig.getProjeto().getIdentificadorProjeto());
+		// for(Tarefa zig : tarefas) { 
+		// 	System.out.println(" id: " + zig.getIdentificadorTarefa() + ", titulo: "+ zig.getTitulo() + ", descricao  "+ zig.getDescricao() + ", nivel prioridade "+ zig.getNivelPrioridade() +", estado "+zig.getEstado()+", ordem "+zig.getOrdem()+
+		// 							", apelido  usuario " +zig.getUsuario().getApelido()+", id projeto "+ zig.getProjeto().getIdentificadorProjeto());
+		// }
+
+		MensagemDAO teste1 = new MensagemDAO(Conexao.conectar());
+		ArrayList<Mensagem> mensagens = teste1.readMensagemUsuario(u);
+
+		for(Mensagem zig : mensagens) {
+			System.out.println(zig.getDataHoraEnvio().get(GregorianCalendar.YEAR));
+			if(zig.getDataHoraVisualizacao() != null) {
+
+				System.out.println(zig.getDataHoraVisualizacao().get(GregorianCalendar.YEAR));
+			}
+			// System.out.println(" id: " + zig.getIdentificadorMensagem() + ", texto: "+ zig.getTexto() + ", estado  "+ zig.getEstado() + ", envio "+ zig.getDataHoraEnvio() 
+			// 	+", visualizar "+zig.getDataHoraVisualizacao()+", remetente "+zig.getRemetente().getApelido() + ", destinatario " + zig.getDestinatario().getApelido());
 		}
 	}
 }
