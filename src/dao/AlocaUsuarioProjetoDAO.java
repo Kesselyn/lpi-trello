@@ -244,11 +244,7 @@ public class AlocaUsuarioProjetoDAO {
     }
 public ArrayList <Usuario> readUsuarioAusenteProjeto(AlocaUsuarioProjeto alocaUsuarioProjeto) {
 		
-        String consulta = "SELECT apelido_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, foto"
-                            + " FROM aloca_usuario_projeto AS A"
-                            + " INNER JOIN usuario AS U"
-                            + " ON A.fk_usuario = U.apelido_usuario"
-                            + " AND fk_projeto != ?";
+        String consulta = "SELECT * FROM trello.usuario where apelido_usuario not in (SELECT fk_usuario FROM trello.aloca_usuario_projeto where fk_projeto = ?)";
         
         try (PreparedStatement pst = conexao.prepareStatement(consulta)) {
             

@@ -142,7 +142,8 @@ public class Main {
 		
 		ArrayList<Usuario> retorno = teste.readUsuarioAusenteProjeto(a);
 
-		 System.out.println("Total de linhas encontradas:" + retorno.size());
+		 System.out.println();
+		 System.out.println("Total de linhas encontradas dos ausentinhos:" + retorno.size());
 		 for(Usuario t : retorno) { 
 			 System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
 		 }
