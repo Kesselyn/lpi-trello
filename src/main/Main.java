@@ -134,12 +134,20 @@ public class Main {
 		// 	System.out.println("id: " + t.getIdentificadorProjeto() + " nome: "+ t.getNomeProjeto() + " coluna: "+ t.getLista() + " idProp: "+ t.getUsuarioProprietario().getApelido());
 		// }
 		
-		// ArrayList<Usuario> retorno = teste.readUsuarioProjeto(a);
+		 ArrayList<Usuario> retorno1 = teste.readUsuarioProjeto(a);
 
-		// System.out.println("Total de linhas encontradas:" + retorno.size());
-		// for(Usuario t : retorno) { 
-		// 	System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
-		// }
+		 System.out.println("Total de linhas encontradas:" + retorno1.size());
+		 for(Usuario t : retorno1) { 
+		 	System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
+		 }
+		
+		ArrayList<Usuario> retorno = teste.readUsuarioAusenteProjeto(a);
+
+		 System.out.println();
+		 System.out.println("Total de linhas encontradas dos ausentinhos:" + retorno.size());
+		 for(Usuario t : retorno) { 
+			 System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
+		 }
 
 		// TarefaDAO testar = new TarefaDAO(Conexao.conectar());
 		// ArrayList<Tarefa> tarefas = testar.readTarefa(p);
