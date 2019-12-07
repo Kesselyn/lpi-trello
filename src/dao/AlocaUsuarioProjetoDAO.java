@@ -204,7 +204,6 @@ public class AlocaUsuarioProjetoDAO {
             //Percorrendo todas as linhas retornadas do banco de dados
             while (resultado.next()) {
                 usuario = new Usuario();
-
                 
                 // pegando os valores da linha da vez:
                 String apelidoUsuario = resultado.getString("apelido_usuario");
@@ -212,33 +211,57 @@ public class AlocaUsuarioProjetoDAO {
                 String emailUsuario = resultado.getString("email_usuario");
                 String senhaUsuario = resultado.getString("senha_usuario");
                 String telefoneUsuario = resultado.getString("telefone_usuario"); 
+                InputStream input = resultado.getBinaryStream("foto");
                 
-                // InputStream initialStream  = resultado.getBinaryStream("foto");
-                // byte[] buffer = new byte[initialStream.available()];
-                // initialStream.read(buffer);
-            
-                // File targetFile = new File("foto.jpg");
-                // OutputStream outStream = new FileOutputStream(targetFile);
-                // outStream.write(buffer);
-                // outStream.flush();
-                // outStream.close();
+                if(telefoneUsuario != null) {
+                    usuario.setTelefone(telefoneUsuario);
+                }
+
+                if(input != null) {
+                    File foto = new File("foto_" + apelidoUsuario + ".jpg");
+                    FileOutputStream output = new FileOutputStream(foto);
+                    
+                    byte[] buffer = new byte[1024];
+                    // Enquanto existir conteúdo no fluxo de dados, continua:
+                    while (input.read(buffer) > 0) {
+                        // Escreve o conteúdo no arquivo de destino no disco:
+                        output.write(buffer);
+                    }
+    
+                    // Fechando a entrada:
+                    input.close();
+    
+                    // Encerra a saída:
+                    output.close();
+
+                    usuario.setFoto(foto);
+                }
                 
                 //inserindo os dados nos objetos para serem colocados no array depois
                 usuario.setApelido(apelidoUsuario);
                 usuario.setNomeUsuario(nomeUsuario);
                 usuario.setEmail(emailUsuario);
                 usuario.setSenha(senhaUsuario);
-                usuario.setTelefone(telefoneUsuario);
-                // usuario.setFoto(new File("foto.jpg"));
 
                 //Adicionando o objeto da vez ArrayList
                 usuarios.add(usuario);
             }
             
+            resultado.close();
+
             //retorno do array com os dados
             return usuarios;
             
         }
+        
+        catch(FileNotFoundException f) {
+            f.printStackTrace();
+        }
+
+        catch(IOException io) {
+            io.printStackTrace();
+        }
+
         catch (SQLException ex) {
             // Se acontecer alguma exceção imprima a pilha de erros
             ex.printStackTrace();
@@ -247,7 +270,8 @@ public class AlocaUsuarioProjetoDAO {
         // se acontecer algum problema
         return null;
     }
-public ArrayList <Usuario> readUsuarioAusenteProjeto(AlocaUsuarioProjeto alocaUsuarioProjeto) {
+
+    public ArrayList <Usuario> readUsuarioAusenteProjeto(AlocaUsuarioProjeto alocaUsuarioProjeto) {
 		
         String consulta = "SELECT * FROM trello.usuario where apelido_usuario not in (SELECT fk_usuario FROM trello.aloca_usuario_projeto where fk_projeto = ?)";
         
@@ -267,7 +291,6 @@ public ArrayList <Usuario> readUsuarioAusenteProjeto(AlocaUsuarioProjeto alocaUs
             //Percorrendo todas as linhas retornadas do banco de dados
             while (resultado.next()) {
                 usuario = new Usuario();
-
                 
                 // pegando os valores da linha da vez:
                 String apelidoUsuario = resultado.getString("apelido_usuario");
@@ -275,24 +298,37 @@ public ArrayList <Usuario> readUsuarioAusenteProjeto(AlocaUsuarioProjeto alocaUs
                 String emailUsuario = resultado.getString("email_usuario");
                 String senhaUsuario = resultado.getString("senha_usuario");
                 String telefoneUsuario = resultado.getString("telefone_usuario"); 
-                
-                // InputStream initialStream  = resultado.getBinaryStream("foto");
-                // byte[] buffer = new byte[initialStream.available()];
-                // initialStream.read(buffer);
-            
-                // File targetFile = new File("foto.jpg");
-                // OutputStream outStream = new FileOutputStream(targetFile);
-                // outStream.write(buffer);
-                // outStream.flush();
-                // outStream.close();
+                InputStream input = resultado.getBinaryStream("foto");
+
+                if(telefoneUsuario != null) {
+                    usuario.setTelefone(telefoneUsuario);
+                }
+
+                if(input != null) {
+                    File foto = new File("foto_" + apelidoUsuario + ".jpg");
+                    FileOutputStream output = new FileOutputStream(foto);
+                    
+                    byte[] buffer = new byte[1024];
+                    // Enquanto existir conteúdo no fluxo de dados, continua:
+                    while (input.read(buffer) > 0) {
+                        // Escreve o conteúdo no arquivo de destino no disco:
+                        output.write(buffer);
+                    }
+    
+                    // Fechando a entrada:
+                    input.close();
+    
+                    // Encerra a saída:
+                    output.close();
+                    
+                    usuario.setFoto(foto);
+                }    
                 
                 //inserindo os dados nos objetos para serem colocados no array depois
                 usuario.setApelido(apelidoUsuario);
                 usuario.setNomeUsuario(nomeUsuario);
                 usuario.setEmail(emailUsuario);
                 usuario.setSenha(senhaUsuario);
-                usuario.setTelefone(telefoneUsuario);
-                // usuario.setFoto(new File("foto.jpg"));
 
                 //Adicionando o objeto da vez ArrayList
                 usuarios.add(usuario);
@@ -300,8 +336,16 @@ public ArrayList <Usuario> readUsuarioAusenteProjeto(AlocaUsuarioProjeto alocaUs
             
             //retorno do array com os dados
             return usuarios;
-            
         }
+
+        catch(FileNotFoundException f) {
+            f.printStackTrace();
+        }
+
+        catch(IOException io) {
+            io.printStackTrace();
+        }
+
         catch (SQLException ex) {
             // Se acontecer alguma exceção imprima a pilha de erros
             ex.printStackTrace();
