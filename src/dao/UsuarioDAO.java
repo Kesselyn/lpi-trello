@@ -1,6 +1,9 @@
 package dao;
 
 import java.sql.*;
+
+import javax.swing.JOptionPane;
+
 import java.io.*;
 
 import model.Projeto;
@@ -19,23 +22,71 @@ public class UsuarioDAO {
 	}
 	
 	public void createUsuario(Usuario usuario) throws Exception {
+		
 		if (readUsuario(usuario) == true) {
 			throw new Exception(" Usuario já cadastrado !!!");
 		}
 		String create = "INSERT INTO usuario(apelido_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, foto)"
 				+ " VALUES (?, ?, ?, ?, ?, ?)";
 		
+		// Condições 
+		String patternSenha = "(?=.*[0-9])(?=.*[a-z]|[A-Z]).{5,}";
+		String patternEmail = "(.*@.*)";
+		//---------------------------------
+		
 		try(PreparedStatement pst = conexao.prepareStatement(create)) {
 			
 			FileInputStream inputStream = new FileInputStream(usuario.getFoto());
 			
-			pst.setString(1, usuario.getApelido());
-			pst.setString(2, usuario.getNomeUsuario());
-			pst.setString(3, usuario.getEmail());
-			pst.setString(4, usuario.getSenha());
-			pst.setString(5, usuario.getTelefone());
+					// pega o apelido informado na criação e garante que ele tem pelo menos 5 digtos
+			if(usuario.getApelido()== null) {
+				throw new Exception(" Defina um apelido !!!");
+			}
+			else if(usuario.getApelido().length() < 5) { // caso n tenha			
+					throw new Exception("O apelido precisa ter pelo menos 5 caracteres");
+			}
+			else {
+					pst.setString(1, usuario.getApelido());// caso tenha	
+			}
+					// Verifica o nome
+			if(usuario.getNomeUsuario()== null) {
+					throw new Exception(" Informe seu nome!!!");
+			}
+			else {
+					pst.setString(2, usuario.getNomeUsuario());
+			}
+					// Verifica o email
+			if(usuario.getEmail()== null) {
+				throw new Exception(" Informe um email!!!");
+			}
+			else if(usuario.getEmail().matches(patternEmail)==false) { 					
+					throw new Exception(" Email sem @ "+ "\n tente novamente");
+			}
+			else {
+					pst.setString(3, usuario.getEmail()); // caso não de  o erro
+				}
+					// verifica senha 
+			if(usuario.getSenha()== null) {
+				throw new Exception(" Informe uma senha!!!");
+			}
+			else if(usuario.getSenha().matches(patternSenha)== false) { 					
+					throw new Exception("Coloque uma senha com números e letras, além de terno mínimo 5 caracteres"+"\n tente novamente");
+			}
+			else if(usuario.getSenha().indexOf(usuario.getApelido()) != -1) {
+					throw new Exception("A senha não pode conter o apelido do usuário"+ "\n tente novamente");
+			}
+			else {
+					pst.setString(4, usuario.getSenha());
+			}
+					// VERIFICA O TELEFONE
+			if(usuario.getTelefone()== null) {
+					throw new Exception(" Defina um apelido !!!");
+			}
+			else{
+				pst.setString(5, usuario.getTelefone());
+			}		
+			
 			pst.setBinaryStream(6, (InputStream) inputStream, (int) (usuario.getFoto().length()));
-		
 			pst.execute();
 			
 		} catch(SQLException e) {
