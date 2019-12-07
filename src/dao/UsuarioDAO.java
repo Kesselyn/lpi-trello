@@ -2,6 +2,8 @@ package dao;
 
 import java.sql.*;
 import java.io.*;
+
+import model.Projeto;
 import model.Usuario;
 
 public class UsuarioDAO {
@@ -16,7 +18,10 @@ public class UsuarioDAO {
 		this.conexao = conexao;
 	}
 	
-	public void createUsuario(Usuario usuario) {
+	public void createUsuario(Usuario usuario) throws Exception {
+		if (readUsuario(usuario) == true) {
+			throw new Exception(" Usuario já cadastrado !!!");
+		}
 		String create = "INSERT INTO usuario(apelido_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, foto)"
 				+ " VALUES (?, ?, ?, ?, ?, ?)";
 		
@@ -91,4 +96,19 @@ public class UsuarioDAO {
 			e.printStackTrace();
 		}
 	}
-}
+	
+	public boolean readUsuario(Usuario usuario) throws Exception {
+		String select = " SELECT * FROM projeto WHERE usuario_apelido = ?";
+        
+		PreparedStatement pst = conexao.prepareStatement(select);
+			
+		pst.setString(1, usuario.getApelido());
+		pst.execute();
+		ResultSet resultado = pst.executeQuery();
+		if (resultado.next()) {
+			return true;
+		} 
+		
+		return false;
+	}
+}	
