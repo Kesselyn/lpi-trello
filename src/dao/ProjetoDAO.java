@@ -1,11 +1,15 @@
 package dao;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 import model.Projeto;
+import model.Usuario;
 
 public class ProjetoDAO {
 	
 	private Connection conexao;
+	
 	
 	public ProjetoDAO() {
 		this(null);
@@ -15,7 +19,12 @@ public class ProjetoDAO {
 		this.conexao = conexao;
 	}
 	
-	public void createProjeto(Projeto projeto) {
+	
+	public void createProjeto(Projeto projeto) throws Exception {
+		if (readProjeto(projeto) == true) {
+			throw new Exception(" Projeto já existente !!!");
+		}
+		
 		String create = "INSERT INTO projeto(nome_projeto, lista_coluna, usuario_proprietario)"
 			+ " VALUES (?, ?, ?)";
 		
@@ -80,5 +89,23 @@ public class ProjetoDAO {
 			System.err.println("Falha no delete no java: " + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+		public boolean readProjeto(Projeto projeto) throws Exception {
+			String select = " SELECT * FROM projeto WHERE usuario_proprietario = ? and nome_projeto = ?";
+            
+
+			PreparedStatement pst = conexao.prepareStatement(select);
+				
+			pst.setString(1, projeto.getUsuarioProprietario().getApelido());
+			pst.setString(2, projeto.getNomeProjeto());
+		
+			pst.execute();
+			ResultSet resultado = pst.executeQuery();
+			if (resultado.next()) {
+				return true;
+			} 
+			
+			return false;
+			
 	}
 }

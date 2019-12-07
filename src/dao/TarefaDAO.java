@@ -19,7 +19,11 @@ public class TarefaDAO {
 		this.conexao = conexao;
 	}
 	/**/
-	public void createTarefa(Tarefa tarefa) {
+	
+	public void createTarefa(Tarefa tarefa) throws Exception{
+		if (readTarefa(tarefa.getProjeto()) != null) {
+			throw new Exception(" Essa tarefa já existe !!!");
+		}
 		String create = "INSERT INTO tarefa(titulo_tarefa, descricao_tarefa, nivel_prioridade, estado_tarefa, ordem_tarefa, fk_usuario, fk_projeto)"
 				+ " VALUES (?,?,?,?,?,?,?)";
 		
