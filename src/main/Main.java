@@ -1,43 +1,46 @@
 package main;
 
-import dao.AlocaUsuarioProjetoDAO;
-import java.util.GregorianCalendar;
-import java.io.File;
-import java.util.ArrayList;
+// import dao.AlocaUsuarioProjetoDAO;
+// import java.util.GregorianCalendar;
+// import java.io.File;
+// import java.util.ArrayList;
 
 // import dao.AlocaUsuarioProjetoDAO;
-import dao.Conexao;
-import dao.MensagemDAO;
-import dao.ProjetoDAO;
+// import dao.Conexao;
 // import dao.MensagemDAO;
 // import dao.ProjetoDAO;
-import dao.TarefaDAO;
+// import dao.MensagemDAO;
+// import dao.ProjetoDAO;
+// import dao.TarefaDAO;
 // import dao.UsuarioDAO;
-import model.Mensagem;
-import model.Projeto;
-import model.Tarefa;
-import model.Usuario;
-import model.AlocaUsuarioProjeto;
+// import model.Mensagem;
+// import model.Projeto;
+// import model.Tarefa;
+// import model.Usuario;
+// import model.AlocaUsuarioProjeto;
+
+import view.Login;
+import view.CadastroUsuario;;
 
 public class Main {
 	public static void main(String[] args) {
-		Conexao.conectar();
+		// Conexao.conectar();
 
 		// Criando dois usuarios para poder usar como remetente e destinatário depois na tabela de mensagem
-		Usuario u = new Usuario("kess", "kesselyn", "afggrth@fgrtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), null, null, null);
-		Usuario u2 = new Usuario("vit", "kesselyn2", "atu@hfgrhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), null, null, null);
+		// Usuario u = new Usuario("kess", "kesselyn", "afggrth@fgrtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), null, null, null);
+		// Usuario u2 = new Usuario("vit", "kesselyn2", "atu@hfgrhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), null, null, null);
 
 		// // Criando uma mensaem, passando o id para poder usar na exclusão depois
 		// Mensagem m = new Mensagem(1, u, u2, "oi2", "enviada", null, null);
 
 		// Criando um projeto, o id passado não é usado para cria-lo pois ele é auto icrement, mas sim para usar como FK na tabela tarefa
-		Projeto p = new Projeto(1,"Times do Brasil", "Em andamento", u2, null, null);
+		// Projeto p = new Projeto(1,"Times do Brasil", "Em andamento", u2, null, null);
 		
 		// // Criando uma tarefa, o id passado não é usado para cria-lo pois ele é auto icrement, mas sim para usar no delete depois
 		// Tarefa t = new Tarefa(1, "Jogar", "Ganhar esse negocio", 1, "A fazer", "Alto", u, p);
 		
 		//Criando a inserção de um usuario em um projeto, o id é passado para ser usado posteriormente no delete
-		AlocaUsuarioProjeto a = new AlocaUsuarioProjeto(1, u2, p);
+		// AlocaUsuarioProjeto a = new AlocaUsuarioProjeto(1, u2, p);
 
 		// try {
 		// 	UsuarioDAO teste = new UsuarioDAO(Conexao.conectar());
@@ -171,8 +174,11 @@ public class Main {
 		// 	// 	+", visualizar "+zig.getDataHoraVisualizacao()+", remetente "+zig.getRemetente().getApelido() + ", destinatario " + zig.getDestinatario().getApelido());
 		// }
 
-		MensagemDAO m = new MensagemDAO();
+		// MensagemDAO m = new MensagemDAO();
 
-		m.alteraEstadoMensagem(1);
+		// m.alteraEstadoMensagem(1);
+
+		CadastroUsuario c = new CadastroUsuario();
+		c.iniciar();
 	}
 }
