@@ -21,6 +21,7 @@ public class MensagemDAO {
 	}
 	
 	public void createMensagem(Mensagem mensagem) {
+		
 		String create = "INSERT INTO mensagem(texto_mensagem, "
 				+ "		estado_mensagem, data_hora_envio, data_hora_visualizacao, remetente, destinatario )"
 				+ " 	VALUES (?, ?, now(), null, ?,?)";
