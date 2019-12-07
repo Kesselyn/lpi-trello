@@ -72,7 +72,7 @@ public class MensagemDAO {
 							+ " WHERE M.remetente = ?"
 							+ " OR M.destinatario = ?";
 
-		try(PreparedStatement pst = conexao.prepareStatement(consulta)){
+		try(PreparedStatement pst = conexao.prepareStatement(consulta)) {
 			pst.setString(1, usuario.getApelido());
 			pst.setString(2, usuario.getApelido());
 
@@ -124,5 +124,29 @@ public class MensagemDAO {
         
         // se acontecer algum problema
         return null;
+	}
+
+	public void alteraEstadoMensagem(int idMensagem) {
+		String update = "UPDATE mensagem SET estado_mensagem = 'lida', data_hora_visualizacao = WHERE id_mensagem = ?";
+
+		try(PreparedStatement pst = conexao.prepareStatement(update)) {
+			pst.setInt(1, idMensagem);
+
+			int linhasAfetadas = pst.executeUpdate();
+			System.out.println("Done Kesselyn! Rows affected: " + linhasAfetadas);
+			
+			if (pst.executeUpdate() == 0) {
+				System.err.println(" Não existe contato com esse ID. ");
+			}
+		}
+
+		catch(SQLException e) {
+			System.err.println("Falha no banco : " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 // import dao.AlocaUsuarioProjetoDAO;
 import dao.Conexao;
 import dao.MensagemDAO;
+import dao.ProjetoDAO;
 // import dao.MensagemDAO;
 // import dao.ProjetoDAO;
 import dao.TarefaDAO;
@@ -134,20 +135,20 @@ public class Main {
 		// 	System.out.println("id: " + t.getIdentificadorProjeto() + " nome: "+ t.getNomeProjeto() + " coluna: "+ t.getLista() + " idProp: "+ t.getUsuarioProprietario().getApelido());
 		// }
 		
-		 ArrayList<Usuario> retorno1 = teste.readUsuarioProjeto(a);
+		// ArrayList<Usuario> retorno1 = teste.readUsuarioProjeto(a);
 
-		 System.out.println("Total de linhas encontradas:" + retorno1.size());
-		 for(Usuario t : retorno1) { 
-		 	System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
-		 }
+		// System.out.println("Total de linhas encontradas:" + retorno1.size());
+		// for(Usuario t : retorno1) { 
+		// 	System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
+		// }
 		
-		ArrayList<Usuario> retorno = teste.readUsuarioAusenteProjeto(a);
+		// ArrayList<Usuario> retorno = teste.readUsuarioAusenteProjeto(a);
 
-		 System.out.println();
-		 System.out.println("Total de linhas encontradas dos ausentinhos:" + retorno.size());
-		 for(Usuario t : retorno) { 
-			 System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
-		 }
+		// System.out.println();
+		// System.out.println("Total de linhas encontradas dos ausentinhos:" + retorno.size());
+		// for(Usuario t : retorno) { 
+		// 	System.out.println("id: " + t.getApelido() + " nome: "+ t.getNomeUsuario() + " email: "+ t.getEmail() + " senha: "+ t.getSenha() + " telefone: " + t.getTelefone());
+		// }
 
 		// TarefaDAO testar = new TarefaDAO(Conexao.conectar());
 		// ArrayList<Tarefa> tarefas = testar.readTarefa(p);
@@ -157,17 +158,21 @@ public class Main {
 		// 							", apelido  usuario " +zig.getUsuario().getApelido()+", id projeto "+ zig.getProjeto().getIdentificadorProjeto());
 		// }
 
-		MensagemDAO teste1 = new MensagemDAO(Conexao.conectar());
-		ArrayList<Mensagem> mensagens = teste1.readMensagemUsuario(u);
+		// MensagemDAO teste1 = new MensagemDAO(Conexao.conectar());
+		// ArrayList<Mensagem> mensagens = teste1.readMensagemUsuario(u);
 
-		for(Mensagem zig : mensagens) {
-			System.out.println(zig.getDataHoraEnvio().get(GregorianCalendar.YEAR));
-			if(zig.getDataHoraVisualizacao() != null) {
+		// for(Mensagem zig : mensagens) {
+		// 	System.out.println(zig.getDataHoraEnvio().get(GregorianCalendar.YEAR));
+		// 	if(zig.getDataHoraVisualizacao() != null) {
 
-				System.out.println(zig.getDataHoraVisualizacao().get(GregorianCalendar.YEAR));
-			}
-			// System.out.println(" id: " + zig.getIdentificadorMensagem() + ", texto: "+ zig.getTexto() + ", estado  "+ zig.getEstado() + ", envio "+ zig.getDataHoraEnvio() 
-			// 	+", visualizar "+zig.getDataHoraVisualizacao()+", remetente "+zig.getRemetente().getApelido() + ", destinatario " + zig.getDestinatario().getApelido());
-		}
+		// 		System.out.println(zig.getDataHoraVisualizacao().get(GregorianCalendar.YEAR));
+		// 	}
+		// 	// System.out.println(" id: " + zig.getIdentificadorMensagem() + ", texto: "+ zig.getTexto() + ", estado  "+ zig.getEstado() + ", envio "+ zig.getDataHoraEnvio() 
+		// 	// 	+", visualizar "+zig.getDataHoraVisualizacao()+", remetente "+zig.getRemetente().getApelido() + ", destinatario " + zig.getDestinatario().getApelido());
+		// }
+
+		MensagemDAO m = new MensagemDAO();
+
+		m.alteraEstadoMensagem(1);
 	}
 }
