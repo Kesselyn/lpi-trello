@@ -22,70 +22,67 @@ public class UsuarioDAO {
 	}
 	
 	public void createUsuario(Usuario usuario) throws Exception {
-		
-		if (readUsuario(usuario) == true) {
-			throw new Exception(" Usuario já cadastrado !!!");
+		// 0 tudo certo,1 email =,2 apelido =,3 os dois =
+		if (readUsuario(usuario) == 3) {
+			throw new Exception(" Usuario já cadastrado e email já cadastrado !!!");
+		}else if (readUsuario(usuario) == 2) {
+			throw new Exception(" Usuario já cadastrado escolha outro apelido !!!");
+		}else if (readUsuario(usuario) == 3) {
+			throw new Exception(" Email já cadastrado !!!");
 		}
-		String create = "INSERT INTO usuario(apelido_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, foto)"
+		else if(readUsuario(usuario)== 0) {
+			String create = "INSERT INTO usuario(apelido_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, foto)"
 				+ " VALUES (?, ?, ?, ?, ?, ?)";
-		
-		// Condições 
-		String patternSenha = "(?=.*[0-9])(?=.*[a-z]|[A-Z]).{5,}";
-		String patternEmail = "(.*@.*)";
-		//---------------------------------
 		
 		try(PreparedStatement pst = conexao.prepareStatement(create)) {
 			
 			FileInputStream inputStream = new FileInputStream(usuario.getFoto());
 			
-					// pega o apelido informado na criação e garante que ele tem pelo menos 5 digtos
+			// pega o apelido informado na criação 
 			if(usuario.getApelido()== null) {
 				throw new Exception(" Defina um apelido !!!");
 			}
-			else if(usuario.getApelido().length() < 5) { // caso n tenha			
-					throw new Exception("O apelido precisa ter pelo menos 5 caracteres");
-			}
 			else {
-					pst.setString(1, usuario.getApelido());// caso tenha	
+				pst.setString(1, usuario.getApelido());// caso tenha	
 			}
-					// Verifica o nome
+			// Verifica o nome
 			if(usuario.getNomeUsuario()== null) {
-					throw new Exception(" Informe seu nome!!!");
+				throw new Exception(" Informe seu nome!!!");
 			}
 			else {
-					pst.setString(2, usuario.getNomeUsuario());
+				pst.setString(2, usuario.getNomeUsuario());
 			}
-					// Verifica o email
+			// Verifica o email
 			if(usuario.getEmail()== null) {
 				throw new Exception(" Informe um email!!!");
 			}
-			else if(usuario.getEmail().matches(patternEmail)==false) { 					
-					throw new Exception(" Email sem @ "+ "\n tente novamente");
-			}
+			
+				String selectEmail = " email_usuario FROM usuario WHERE email_usuario LIKE(?);";
+				conexao.prepareStatement(selectEmail); 
+				pst.setString(1, usuario.getEmail());
+				pst.execute();
+				ResultSet resultado = pst.executeQuery();
+				
+			if (resultado.next()) {
+				throw new Exception("Email já cadastrado");
+			} 
 			else {
-					pst.setString(3, usuario.getEmail()); // caso não de  o erro
-				}
-					// verifica senha 
+				pst.setString(3, usuario.getEmail()); // caso não de  o erro
+			}
+			// verifica senha 
 			if(usuario.getSenha()== null) {
 				throw new Exception(" Informe uma senha!!!");
 			}
-			else if(usuario.getSenha().matches(patternSenha)== false) { 					
-					throw new Exception("Coloque uma senha com números e letras, além de terno mínimo 5 caracteres"+"\n tente novamente");
-			}
-			else if(usuario.getSenha().indexOf(usuario.getApelido()) != -1) {
-					throw new Exception("A senha não pode conter o apelido do usuário"+ "\n tente novamente");
-			}
 			else {
-					pst.setString(4, usuario.getSenha());
+				pst.setString(4, usuario.getSenha());
 			}
-					// VERIFICA O TELEFONE
+			// VERIFICA O TELEFONE
 			if(usuario.getTelefone()== null) {
-					throw new Exception(" Defina um apelido !!!");
+				throw new Exception(" Defina um apelido !!!");
 			}
 			else{
 				pst.setString(5, usuario.getTelefone());
 			}		
-			
 			pst.setBinaryStream(6, (InputStream) inputStream, (int) (usuario.getFoto().length()));
 			pst.execute();
 			
@@ -96,23 +93,63 @@ public class UsuarioDAO {
 			System.err.println("Falha no java: " + e.getMessage());
 			e.printStackTrace();
 		}
+		}
 	}
 
-	public void updateUsuario(Usuario usuario) {
+	public void updateUsuario(Usuario usuario) throws Exception {
 		String update = "UPDATE usuario SET nome_usuario = ?, email_usuario = ?, senha_usuario=?, telefone_usuario=?, foto=?  WHERE apelido_usuario = ?";
 		
 		try(PreparedStatement pst = conexao.prepareStatement(update)) {
-			
+			//nome
 			FileInputStream inputStream = new FileInputStream(usuario.getFoto());
 			
-			pst.setString(1, usuario.getNomeUsuario());
-			pst.setString(2, usuario.getEmail());
-			pst.setString(3, usuario.getSenha());
-			pst.setString(4, usuario.getTelefone());
-			pst.setBinaryStream(5, (InputStream) inputStream, (int) (usuario.getFoto().length()));
-			pst.setString(6, usuario.getApelido());
+			if(usuario.getNomeUsuario()== null) {
+					throw new Exception(" Informe um novo nome!!!");
+			}else {
+					pst.setString(1, usuario.getNomeUsuario());
+			}
+			//email
+			if(usuario.getEmail()== null) {
+				throw new Exception(" Informe um email!!!");
+			}
+					String selectEmail = " email_usuario FROM usuario WHERE email_usuario LIKE(?);";
+					conexao.prepareStatement(selectEmail); 
+					pst.setString(1, usuario.getEmail());
+					pst.execute();
+					ResultSet resultado = pst.executeQuery();
+					
+			if(resultado.next()) {
+				throw new Exception("Email já cadastrado");
+			} 
+			else {
+				pst.setString(2, usuario.getEmail()); // caso não de  o erro
+			}
+			// senha
+			if(usuario.getTelefone()== null) {
+				throw new Exception(" Informe um nova senha!!!");
+			}
+				String selectSenha = " senha_usuario FROM usuario WHERE senha_usuario LIKE(?);";
+				conexao.prepareStatement(selectSenha); 
+				pst.setString(1, usuario.getSenha());
+				pst.execute();
+				ResultSet resultadoSenha = pst.executeQuery();
+				
+			if(resultadoSenha.next()) {
+				throw new Exception("SENHA JÁ CADASTRADA");
+			} 
+			else {
+				pst.setString(3, usuario.getSenha());
+			}
+			// telefone
+			if(usuario.getTelefone()== null) {
+				throw new Exception(" Informe um novo telefone!!!");
+			}
+			else {
+				pst.setString(4, usuario.getTelefone());
+			}
+				pst.setBinaryStream(5, (InputStream) inputStream, (int) (usuario.getFoto().length()));
+				pst.setString(6, usuario.getApelido());
 
-		
 			int linhasAfetadas = pst.executeUpdate();
 			System.out.println("Done! Rows affected: " + linhasAfetadas);
 			if (pst.executeUpdate() == 0) {
@@ -148,18 +185,28 @@ public class UsuarioDAO {
 		}
 	}
 	
-	public boolean readUsuario(Usuario usuario) throws Exception {
-		String select = " SELECT * FROM projeto WHERE usuario_apelido = ?";
-        
+	public int readUsuario(Usuario usuario) throws Exception {
+		String select = " SELECT * FROM usuario WHERE usuario_apelido = ? or email_usuario = ?";
+			
 		PreparedStatement pst = conexao.prepareStatement(select);
 			
-		pst.setString(1, usuario.getApelido());
-		pst.execute();
-		ResultSet resultado = pst.executeQuery();
-		if (resultado.next()) {
-			return true;
-		} 
-		
-		return false;
+			pst.setString(1, usuario.getApelido());
+			pst.setString(2, usuario.getEmail());
+			pst.execute();
+			ResultSet resultado = pst.executeQuery();
+			String apelido = resultado.getString("usuario_apelido");
+			String email = resultado.getString("email_usuario");
+			
+		if(apelido.equals(usuario.getApelido()) && email.equals(usuario.getEmail())) {
+			return 3;
+		}
+		else if(apelido.equals(usuario.getApelido()) && !email.equals(usuario.getEmail())) {
+			return 2;
+		}
+		else if(!apelido.equals(usuario.getApelido()) && email.equals(usuario.getEmail())) {
+			return 1;
+		}else { 
+			return 0;
+		}
 	}
 }	
