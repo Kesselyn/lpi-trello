@@ -7,6 +7,8 @@ package view;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 import dao.Conexao;
 import dao.UsuarioDAO;
 import model.Usuario;
@@ -55,41 +57,17 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel1.setText("Apelido");
 
-        inputEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputEmailActionPerformed(evt);
-            }
-        });
-
-        inputNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputNomeActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel2.setText("Nome");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel3.setText("Email");
 
-        inputApelido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputApelidoActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel4.setText("Senha");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel5.setText("Telefone");
-
-        inputTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputTelefoneActionPerformed(evt);
-            }
-        });
 
         btnUpload.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnUpload.setText("Fazer upload da foto");
@@ -188,15 +166,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
-
-    private void inputApelidoActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
-    }                                            
-
-    private void inputTelefoneActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
-    }                                             
+    }// </editor-fold>                                                                    
 
     private void btnUploadActionPerformed(java.awt.event.ActionEvent evt) {                                          
         JFileChooser file = new JFileChooser();
@@ -208,14 +178,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
             usuario.setFoto(foto);
         }
     }                                         
-
-    private void inputNomeActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-    }                                         
-
-    private void inputEmailActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
-    }                                          
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {                                             
         String apelido = inputApelido.getText();
@@ -231,20 +193,18 @@ public class CadastroUsuario extends javax.swing.JFrame {
         usuario.setTelefone(telefone);
 
         UsuarioDAO uDAO = new UsuarioDAO(Conexao.conectar());
-        uDAO.createUsuario(usuario);
-        // System.out.println(usuario.getApelido());
-        // System.out.println(usuario.getNomeUsuario());
-        // System.out.println(usuario.getEmail());
-        // System.out.println(usuario.getSenha());
-        // System.out.println(usuario.getTelefone());
-        // try {
-        // } catch(Exception e) {
-            
-        // }
+        
+        try {
+            uDAO.createUsuario(usuario);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
+        }
     }                                            
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        Login login = new Login();
+        login.iniciar();
     }                                        
 
     /**

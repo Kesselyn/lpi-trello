@@ -1,12 +1,8 @@
 package dao;
 
 import java.sql.*;
-
-import javax.swing.JOptionPane;
-
 import java.io.*;
 
-import model.Projeto;
 import model.Usuario;
 
 public class UsuarioDAO {
@@ -24,12 +20,12 @@ public class UsuarioDAO {
 	public void createUsuario(Usuario usuario) throws Exception {
 		
 		if (readUsuario(usuario) == true) {
-			throw new Exception(" Usuario j· cadastrado !!!");
+			throw new Exception(" Usuario j√° cadastrado !!!");
 		}
 		String create = "INSERT INTO usuario(apelido_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, foto)"
 				+ " VALUES (?, ?, ?, ?, ?, ?)";
 		
-		// CondiÁıes 
+		// CondiÔøΩÔøΩes 
 		String patternSenha = "(?=.*[0-9])(?=.*[a-z]|[A-Z]).{5,}";
 		String patternEmail = "(.*@.*)";
 		//---------------------------------
@@ -38,7 +34,7 @@ public class UsuarioDAO {
 			
 			FileInputStream inputStream = new FileInputStream(usuario.getFoto());
 			
-					// pega o apelido informado na criaÁ„o e garante que ele tem pelo menos 5 digtos
+					// pega o apelido informado na criaÔøΩÔøΩo e garante que ele tem pelo menos 5 digtos
 			if(usuario.getApelido()== null) {
 				throw new Exception(" Defina um apelido !!!");
 			}
@@ -63,17 +59,17 @@ public class UsuarioDAO {
 					throw new Exception(" Email sem @ "+ "\n tente novamente");
 			}
 			else {
-					pst.setString(3, usuario.getEmail()); // caso n„o de  o erro
+					pst.setString(3, usuario.getEmail()); // caso nÔøΩo de  o erro
 				}
 					// verifica senha 
 			if(usuario.getSenha()== null) {
 				throw new Exception(" Informe uma senha!!!");
 			}
 			else if(usuario.getSenha().matches(patternSenha)== false) { 					
-					throw new Exception("Coloque uma senha com n˙meros e letras, alÈm de terno mÌnimo 5 caracteres"+"\n tente novamente");
+					throw new Exception("Coloque uma senha com nÔøΩmeros e letras, alÔøΩm de terno mÔøΩnimo 5 caracteres"+"\n tente novamente");
 			}
 			else if(usuario.getSenha().indexOf(usuario.getApelido()) != -1) {
-					throw new Exception("A senha n„o pode conter o apelido do usu·rio"+ "\n tente novamente");
+					throw new Exception("A senha nÔøΩo pode conter o apelido do usuÔøΩrio"+ "\n tente novamente");
 			}
 			else {
 					pst.setString(4, usuario.getSenha());
@@ -149,7 +145,7 @@ public class UsuarioDAO {
 	}
 	
 	public boolean readUsuario(Usuario usuario) throws Exception {
-		String select = " SELECT * FROM projeto WHERE usuario_apelido = ?";
+		String select = " SELECT * FROM usuario WHERE apelido_usuario = ?";
         
 		PreparedStatement pst = conexao.prepareStatement(select);
 			
@@ -161,5 +157,84 @@ public class UsuarioDAO {
 		} 
 		
 		return false;
+	}
+
+	public Usuario loginUsuario(Usuario usuario) throws Exception {
+		
+		if (readUsuario(usuario) == false) {
+			throw new Exception(" Usuario n√£o encontrado");
+		} else {
+			String select = " SELECT * FROM usuario WHERE senha_usuario = ?";
+
+			try (PreparedStatement pst = conexao.prepareStatement(select)) {
+				
+				pst.setString(1, usuario.getSenha());
+				pst.execute();
+
+				ResultSet resultado = pst.executeQuery();
+				Usuario logUsuario = null;
+
+				if (resultado.next()) {
+					logUsuario = new Usuario();
+
+					String apelido = resultado.getString("apelido_usuario");
+					String nome = resultado.getString("nome_usuario");
+					String email = resultado.getString("email_usuario");
+					String senha = resultado.getString("senha_usuario");
+					String telefone = resultado.getString("telefone_usuario");
+					InputStream input = resultado.getBinaryStream("foto");
+
+					if(telefone != null) {
+						logUsuario.setTelefone(telefone);
+					}
+					
+					if(input != null) {
+						File foto = new File("foto_" + apelido + ".jpg");
+						FileOutputStream output = new FileOutputStream(foto);
+						
+						byte[] buffer = new byte[1024];
+						// Enquanto existir conte√∫do no fluxo de dados, continua:
+						while (input.read(buffer) > 0) {
+							// Escreve o conte√∫do no arquivo de destino no disco:
+							output.write(buffer);
+						}
+		
+						// Fechando a entrada:
+						input.close();
+		
+						// Encerra a sa√≠da:
+						output.close();
+
+						usuario.setFoto(foto);
+					}
+					
+					logUsuario.setApelido(apelido);
+					logUsuario.setNomeUsuario(nome);
+					logUsuario.setEmail(email);
+					logUsuario.setSenha(senha);
+
+					return logUsuario;
+
+				} else {
+					throw new Exception("Senha errada");
+				}
+			}
+
+			catch(FileNotFoundException f) {
+				f.printStackTrace();
+			}
+
+			catch(IOException io) {
+				io.printStackTrace();
+			}
+
+			catch (SQLException ex) {
+				// Se acontecer alguma exce√ß√£o imprima a pilha de erros
+				ex.printStackTrace();
+			}
+			
+			// se acontecer algum problema
+			return null;
+		}
 	}
 }	

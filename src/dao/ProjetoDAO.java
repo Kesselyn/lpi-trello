@@ -1,10 +1,10 @@
 package dao;
 
 import java.sql.*;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
 import model.Projeto;
-import model.Usuario;
+// import model.Usuario;
 
 public class ProjetoDAO {
 	
@@ -22,7 +22,7 @@ public class ProjetoDAO {
 	
 	public void createProjeto(Projeto projeto) throws Exception {
 		if (readProjeto(projeto) == true) {
-			throw new Exception(" Projeto já existente !!!");
+			throw new Exception(" Projeto jï¿½ existente !!!");
 		}
 		
 		String create = "INSERT INTO projeto(nome_projeto, lista_coluna, usuario_proprietario)"

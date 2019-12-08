@@ -21,7 +21,7 @@ public class AlocaUsuarioProjetoDAO {
     public void createAlocaUsuarioProjeto(AlocaUsuarioProjeto aloca) throws Exception  {
     	
     	if (readProjetosUsuario(aloca) != null) {
-			throw new Exception(" Você já está inserido no projeto !!!");
+			throw new Exception(" Vocï¿½ jï¿½ estï¿½ inserido no projeto !!!");
 		}
     	
 		String create = "INSERT INTO aloca_usuario_projeto(fk_usuario, fk_projeto)"

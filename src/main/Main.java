@@ -20,7 +20,7 @@ package main;
 // import model.AlocaUsuarioProjeto;
 
 import view.Login;
-import view.CadastroUsuario;;
+// import view.CadastroUsuario;;
 
 public class Main {
 	public static void main(String[] args) {
@@ -178,7 +178,10 @@ public class Main {
 
 		// m.alteraEstadoMensagem(1);
 
-		CadastroUsuario c = new CadastroUsuario();
-		c.iniciar();
+		// CadastroUsuario c = new CadastroUsuario();
+		// c.iniciar();
+
+		Login login = new Login();
+		login.iniciar();
 	}
 }

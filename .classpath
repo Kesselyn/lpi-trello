@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySQLConnector"/>
+	<classpathentry kind="lib" path="C:/Users/kesse/OneDrive/Documents/USJT/2º semestre/LPI/lpi-trello/mysql-connector-java-8.0.12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -5,11 +5,19 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+
+import dao.Conexao;
+import dao.UsuarioDAO;
+import model.Usuario;
+
 /**
  *
  * @author vitor
  */
 public class Login extends javax.swing.JFrame {
+
+    Usuario usuario = new Usuario();
 
     /**
      * Creates new form Login
@@ -29,8 +37,8 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Email = new javax.swing.JTextField();
-        Senha = new javax.swing.JTextField();
+        inputApelido = new javax.swing.JTextField();
+        inputSenha = new javax.swing.JTextField();
         Cadastrar = new javax.swing.JButton();
         Entrar = new javax.swing.JButton();
 
@@ -38,19 +46,16 @@ public class Login extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1000, 1000));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel1.setText("E-mail");
+        jLabel1.setText("Apelido");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel2.setText("Senha");
 
-        Email.setMaximumSize(new java.awt.Dimension(1920, 1920));
-        Email.setName(""); // NOI18N
+        inputApelido.setMaximumSize(new java.awt.Dimension(1920, 1920));
+        inputApelido.setName(""); // NOI18N
 
-        Senha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SenhaActionPerformed(evt);
-            }
-        });
+        inputSenha.setMaximumSize(new java.awt.Dimension(1920, 1920));
+        inputSenha.setName(""); // NOI18N
 
         Cadastrar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Cadastrar.setText("Cadastrar");
@@ -84,8 +89,8 @@ public class Login extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Senha, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputApelido, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 98, Short.MAX_VALUE))
         );
@@ -95,11 +100,11 @@ public class Login extends javax.swing.JFrame {
                 .addGap(81, 81, 81)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputApelido, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Senha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -111,22 +116,34 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void EntrarActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        // TODO add your handling code here:
-        
+        String apelido = this.inputApelido.getText();
+        String senha = this.inputSenha.getText();
+
+        usuario.setApelido(apelido);
+        usuario.setSenha(senha);
+
+        UsuarioDAO uDAO = new UsuarioDAO(Conexao.conectar());
+
+        try {
+            uDAO.loginUsuario(usuario);
+            ListaProjetos listaProjetos = new ListaProjetos();
+            listaProjetos.iniciar();
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
+        }
     }                                      
 
     private void CadastrarActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
+        CadastroUsuario cadastro = new CadastroUsuario();
+        cadastro.iniciar();
     }                                         
-
-    private void SenhaActionPerformed(java.awt.event.ActionEvent evt) {                                      
-        // TODO add your handling code here:
-    }                                     
+                                    
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void iniciar() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -160,9 +177,9 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton Cadastrar;
-    private javax.swing.JTextField Email;
+    private javax.swing.JTextField inputApelido;
     private javax.swing.JButton Entrar;
-    private javax.swing.JTextField Senha;
+    private javax.swing.JTextField inputSenha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration                   
