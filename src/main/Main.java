@@ -26,10 +26,6 @@ public class Main {
 	public static void main(String[] args) {
 		// Conexao.conectar();
 
-		// Criando dois usuarios para poder usar como remetente e destinatário depois na tabela de mensagem
-		// Usuario u = new Usuario("kess", "kesselyn", "afggrth@fgrtghegailff.br", "1234", "4002-8922", new File("rato.jpg"), null, null, null);
-		// Usuario u2 = new Usuario("vit", "kesselyn2", "atu@hfgrhgrthetmaffil.com.br", "1234", "5555-5555", new File("rato.jpg"), null, null, null);
-
 		// // Criando uma mensaem, passando o id para poder usar na exclusão depois
 		// Mensagem m = new Mensagem(1, u, u2, "oi2", "enviada", null, null);
 

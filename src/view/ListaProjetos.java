@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.CriarNovoProjeto;
 /**
  *
  * @author vitor
@@ -91,7 +92,8 @@ public class ListaProjetos extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void btnNovoProjetoActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
+        CriarNovoProjeto criarProjeto = new CriarNovoProjeto();
+        criarProjeto.iniciar();
     }                                              
 
     /**

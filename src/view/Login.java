@@ -128,6 +128,7 @@ public class Login extends javax.swing.JFrame {
             uDAO.loginUsuario(usuario);
             ListaProjetos listaProjetos = new ListaProjetos();
             listaProjetos.iniciar();
+            dispose();
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
@@ -137,6 +138,7 @@ public class Login extends javax.swing.JFrame {
     private void CadastrarActionPerformed(java.awt.event.ActionEvent evt) {                                          
         CadastroUsuario cadastro = new CadastroUsuario();
         cadastro.iniciar();
+        dispose();
     }                                         
                                     
 

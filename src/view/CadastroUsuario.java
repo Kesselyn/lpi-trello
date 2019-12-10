@@ -205,6 +205,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                         
         Login login = new Login();
         login.iniciar();
+        dispose();
     }                                        
 
     /**

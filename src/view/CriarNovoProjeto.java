@@ -33,7 +33,7 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
         labelStatus = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Descrição.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         Descrição.setText("Descrição da Atividade");
@@ -120,7 +120,7 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void iniciar() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
