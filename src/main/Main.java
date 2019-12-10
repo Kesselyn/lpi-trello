@@ -1,30 +1,9 @@
 package main;
 
-// import dao.AlocaUsuarioProjetoDAO;
-// import java.util.GregorianCalendar;
-// import java.io.File;
-// import java.util.ArrayList;
-
-// import dao.AlocaUsuarioProjetoDAO;
-// import dao.Conexao;
-// import dao.MensagemDAO;
-// import dao.ProjetoDAO;
-// import dao.MensagemDAO;
-// import dao.ProjetoDAO;
-// import dao.TarefaDAO;
-// import dao.UsuarioDAO;
-// import model.Mensagem;
-// import model.Projeto;
-// import model.Tarefa;
-// import model.Usuario;
-// import model.AlocaUsuarioProjeto;
-
 import view.Login;
-// import view.CadastroUsuario;;
 
 public class Main {
 	public static void main(String[] args) {
-		// Conexao.conectar();
 
 		// // Criando uma mensaem, passando o id para poder usar na exclusão depois
 		// Mensagem m = new Mensagem(1, u, u2, "oi2", "enviada", null, null);
@@ -179,5 +158,7 @@ public class Main {
 
 		Login login = new Login();
 		login.iniciar();
+
+
 	}
 }

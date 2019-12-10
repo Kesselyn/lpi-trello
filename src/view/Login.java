@@ -127,7 +127,7 @@ public class Login extends javax.swing.JFrame {
         try {
             uDAO.loginUsuario(usuario);
             ListaProjetos listaProjetos = new ListaProjetos();
-            listaProjetos.iniciar();
+            listaProjetos.iniciar(usuario);
             dispose();
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

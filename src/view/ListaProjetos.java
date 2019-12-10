@@ -6,11 +6,13 @@
 package view;
 
 import view.CriarNovoProjeto;
+import model.Usuario;
 /**
  *
  * @author vitor
  */
 public class ListaProjetos extends javax.swing.JFrame {
+    public Usuario usuario;
 
     /**
      * Creates new form ListaProjetos
@@ -93,13 +95,14 @@ public class ListaProjetos extends javax.swing.JFrame {
 
     private void btnNovoProjetoActionPerformed(java.awt.event.ActionEvent evt) {                                               
         CriarNovoProjeto criarProjeto = new CriarNovoProjeto();
-        criarProjeto.iniciar();
+        criarProjeto.iniciar(this.usuario);
     }                                              
 
     /**
      * @param args the command line arguments
      */
-    public static void iniciar() {
+    public void iniciar(Usuario usuario) {
+        this.usuario = usuario;
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
