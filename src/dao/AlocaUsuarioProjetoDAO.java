@@ -20,9 +20,9 @@ public class AlocaUsuarioProjetoDAO {
 
     public void createAlocaUsuarioProjeto(AlocaUsuarioProjeto aloca) throws Exception  {
     	
-    	if (readProjetosUsuario(aloca) != null) {
-			throw new Exception(" Voc� j� est� inserido no projeto !!!");
-		}
+    	// if (readProjetosUsuario(aloca) != null) {
+		// 	throw new Exception(" Voc� j� est� inserido no projeto !!!");
+		// }
     	
 		String create = "INSERT INTO aloca_usuario_projeto(fk_usuario, fk_projeto)"
 				+ " 	VALUES (?, ?)";
@@ -68,7 +68,7 @@ public class AlocaUsuarioProjetoDAO {
     
     //A classe é do tipo array de projetos pois é o tipo que quero retornar
     //Ela recebe AlocaProjetoUsuario como parâmetro pq é onde estão os dados que vou utilizar na consulta
-    public ArrayList <Projeto> readProjetosUsuario(AlocaUsuarioProjeto alocaUsuarioProjeto) {
+    public ArrayList <Projeto> readProjetosUsuario(Usuario u) {
 		
         String consulta = "SELECT id_projeto, nome_projeto, lista_coluna, usuario_proprietario "
                             + " FROM aloca_usuario_projeto AS A"
@@ -78,7 +78,7 @@ public class AlocaUsuarioProjetoDAO {
         
         try (PreparedStatement pst = conexao.prepareStatement(consulta)) {
             
-            pst.setString(1, alocaUsuarioProjeto.getUsuario().getApelido());
+            pst.setString(1, u.getApelido());
             
             //executando a busca
             ResultSet resultado = pst.executeQuery();
@@ -126,13 +126,13 @@ public class AlocaUsuarioProjetoDAO {
         return null;
     }
 
-    public ArrayList <Projeto> readProjetosADM(Projeto projeto) {
+    public ArrayList <Projeto> readProjetosADM(Usuario u) {
 		
         String consulta = "SELECT * FROM projeto WHERE usuario_proprietario = ?";
         
         try (PreparedStatement pst = conexao.prepareStatement(consulta)) {
             
-            pst.setString(1, projeto.getUsuarioProprietario().getApelido());
+            pst.setString(1, u.getApelido());
             
             //executando a busca
             ResultSet resultado = pst.executeQuery();

@@ -91,7 +91,7 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(inputSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(inputApelido, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -125,10 +125,10 @@ public class Login extends javax.swing.JFrame {
         UsuarioDAO uDAO = new UsuarioDAO(Conexao.conectar());
 
         try {
-            uDAO.loginUsuario(usuario);
-            ListaProjetos listaProjetos = new ListaProjetos();
-            listaProjetos.iniciar(usuario);
+            usuario = uDAO.loginUsuario(usuario);
+            ListaProjetos listaProjetos = new ListaProjetos(usuario);
             dispose();
+            listaProjetos.iniciar();
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();

@@ -5,19 +5,28 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+
+import dao.Conexao;
+import dao.TarefaDAO;
+import model.Tarefa;
 import model.Usuario;
 import model.Projeto;
+
 /**
  *
  * @author vitor
  */
 public class CriarNovaTarefa extends javax.swing.JFrame {
-    public Usuario usuario;    
-
+    public static Usuario usuario;
+    public static Projeto projeto;
+            
     /**
-     * Creates new form CriarNovaTarefa
+     * Creates new form CriarNovoProjeto
      */
-    public CriarNovaTarefa() {
+    public CriarNovaTarefa(Usuario u, Projeto p) {
+        this.usuario = u;
+        this.projeto = p;
         initComponents();
     }
 
@@ -30,31 +39,33 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        Descrição = new javax.swing.JTextField();
-        Atividade = new javax.swing.JTextField();
+        jtxtTarefaDesc = new javax.swing.JTextField();
+        jtxtTarefaNome = new javax.swing.JTextField();
         labelPrioridade = new javax.swing.JLabel();
         labelStatus = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
+        cmbPrioridade = new javax.swing.JComboBox<>();
+        cmbStatus = new javax.swing.JComboBox<>();
 
-        // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        Descrição.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        Descrição.setText("Descrição da Atividade");
-        Descrição.setMaximumSize(new java.awt.Dimension(1920, 1920));
-        Descrição.setName(""); // NOI18N
-        Descrição.addActionListener(new java.awt.event.ActionListener() {
+        jtxtTarefaDesc.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jtxtTarefaDesc.setText("Descrição da Atividade");
+        jtxtTarefaDesc.setMaximumSize(new java.awt.Dimension(1920, 1920));
+        jtxtTarefaDesc.setName(""); // NOI18N
+        jtxtTarefaDesc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DescriçãoActionPerformed(evt);
+                jtxtTarefaDescActionPerformed(evt);
             }
         });
 
-        Atividade.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        Atividade.setText("Atividade");
-        Atividade.setMaximumSize(new java.awt.Dimension(1920, 1920));
-        Atividade.setName(""); // NOI18N
-        Atividade.addActionListener(new java.awt.event.ActionListener() {
+        jtxtTarefaNome.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jtxtTarefaNome.setText("Atividade");
+        jtxtTarefaNome.setMaximumSize(new java.awt.Dimension(1920, 1920));
+        jtxtTarefaNome.setName(""); // NOI18N
+        jtxtTarefaNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AtividadeActionPerformed(evt);
+                jtxtTarefaNomeActionPerformed(evt);
             }
         });
 
@@ -65,10 +76,24 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
         labelStatus.setText("Status:");
 
         btnEditar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnEditar.setText("Editar");
+        btnEditar.setText("Criar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
+            }
+        });
+
+        cmbPrioridade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alta", "Média", "Baixa" }));
+        cmbPrioridade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPrioridadeActionPerformed(evt);
+            }
+        });
+
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nova", "em andamento", "finalizada" }));
+        cmbStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbStatusActionPerformed(evt);
             }
         });
 
@@ -81,11 +106,15 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(labelStatus)
-                            .addComponent(labelPrioridade)
-                            .addComponent(Atividade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Descrição, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(labelStatus)
+                                .addComponent(labelPrioridade)
+                                .addComponent(jtxtTarefaNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jtxtTarefaDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cmbStatus, javax.swing.GroupLayout.Alignment.LEADING, 0, 187, Short.MAX_VALUE)
+                                .addComponent(cmbPrioridade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(81, 81, 81)))
                 .addGap(41, 41, 41))
         );
@@ -93,38 +122,69 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(Atividade, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtxtTarefaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Descrição, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtxtTarefaDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(labelPrioridade)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
                 .addComponent(labelStatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>                        
 
-    private void DescriçãoActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void jtxtTarefaDescActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
-    }                                         
+    }                                              
 
-    private void AtividadeActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void jtxtTarefaNomeActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
-    }                                         
+    }                                              
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {                                          
+
+        Tarefa tarefa = new Tarefa();
+        String nomeTarefa =jtxtTarefaNome.getText();
+        String descTarefa = jtxtTarefaDesc.getText();
+        String prioTarefa = (String) cmbPrioridade.getSelectedItem();
+        String estadoTarefa = (String) cmbStatus.getSelectedItem();
+        
+        tarefa.setTitulo(nomeTarefa);
+        tarefa.setDescricao(descTarefa);
+        tarefa.setNivelPrioridade(prioTarefa);
+        tarefa.setEstado(estadoTarefa);
+
+        TarefaDAO tDAO = new TarefaDAO(Conexao.conectar());
+          
+        try{
+            tDAO.createTarefa(tarefa);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
+        }
+    }                                         
+
+    private void cmbPrioridadeActionPerformed(java.awt.event.ActionEvent evt) {                                              
+      
+    }                                             
+
+    private void cmbStatusActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
     }                                         
 
     /**
      * @param args the command line arguments
      */
-    public void iniciar(Usuario usuario) {
-        this.usuario = usuario;
+    public void iniciar() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -147,21 +207,49 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CriarNovaTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CriarNovaTarefa().setVisible(true);
-            }
-        });
+        this.setVisible(true);
+        
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JTextField Atividade;
-    private javax.swing.JTextField Descrição;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JComboBox<String> cmbPrioridade;
+    private javax.swing.JComboBox<String> cmbStatus;
+    private javax.swing.JTextField jtxtTarefaDesc;
+    private javax.swing.JTextField jtxtTarefaNome;
     private javax.swing.JLabel labelPrioridade;
     private javax.swing.JLabel labelStatus;
     // End of variables declaration                   
 }
-

@@ -5,20 +5,31 @@
  */
 package view;
 
-import model.Usuario;
+import javax.swing.JOptionPane;
 
-// import view.ListaProjetos;
+import dao.Conexao;
+import dao.ProjetoDAO;
+import model.Usuario;
+import model.Projeto;
 /**
  *
  * @author vitor
  */
 public class CriarNovoProjeto extends javax.swing.JFrame {
-    public Usuario usuario;
+
+    public static Usuario usuario;
+
+    Projeto projeto = new Projeto();
     
     /**
      * Creates new form CriarNovaTarefa
      */
     public CriarNovoProjeto() {
+        
+    }
+
+    public CriarNovoProjeto(Usuario usuario) {
+        this.usuario = usuario;
         initComponents();
     }
 
@@ -95,14 +106,27 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_inputNomeDoProjetoActionPerformed
 
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCriarActionPerformed
+        String nomeProjeto = inputNomeDoProjeto.getText();
+
+        projeto.setNomeProjeto(nomeProjeto);
+        projeto.setUsuarioProprietario(usuario);
+        projeto.setLista("");
+
+        ProjetoDAO pDAO = new ProjetoDAO(Conexao.conectar());
+
+        try{
+            pDAO.createProjeto(projeto);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      * @param args the command line arguments
      */
-    public void iniciar(Usuario usuario) {
-        this.usuario = usuario;
+    public static void iniciar() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

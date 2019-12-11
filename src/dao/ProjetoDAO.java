@@ -1,10 +1,7 @@
 package dao;
 
 import java.sql.*;
-// import java.util.ArrayList;
-
 import model.Projeto;
-// import model.Usuario;
 
 public class ProjetoDAO {
 	
@@ -21,50 +18,32 @@ public class ProjetoDAO {
 	
 	
 	public void createProjeto(Projeto projeto) throws Exception {
-		if (readProjeto(projeto) == 3) {
-			throw new Exception(" Usuario propriet�rio j� cadastrado e nome de projeto j� cadastrado !!!");
-		}else if (readProjeto(projeto) == 2) {
-			throw new Exception(" Usuario propriet�rio j� cadastrado escolha outro!!!");
-		}else if (readProjeto(projeto) == 3) {
-			throw new Exception(" Nome de projeto j� cadastrado !!!");
+		
+		if (readProjeto(projeto) == 1) {
+			throw new Exception("Você já é proprietário de um projeto com esse nome");
 		}
-		else if(readProjeto(projeto)== 0) {
+
+		else if(readProjeto(projeto) == 0) {
 		
-		String create = "INSERT INTO projeto(nome_projeto, lista_coluna, usuario_proprietario)"
-			+ " VALUES (?, ?, ?)";
-		
-		try(PreparedStatement pst = conexao.prepareStatement(create)) {
-				// nome projeto
-				if(projeto.getNomeProjeto()== null) {
-					throw new Exception("Informe um nome de projeto");
-				}
-				else{
-					pst.setString(1, projeto.getNomeProjeto());
-				}
-				//lista coluna
-				if(projeto.getLista()== null) {
-					throw new Exception("Crie uma lista");
-				}
-				else {
-					pst.setString(2, projeto.getLista());
-				}
-				//  usuario proprietario
-				if(projeto.getUsuarioProprietario().getApelido()==null) {
-					throw new Exception("Usu�rio Propriet�rio n�o encontrado");
-				}
-				else {
-					pst.setString(3, projeto.getUsuarioProprietario().getApelido());
-				}
-				pst.execute();
+			String create = "INSERT INTO projeto(nome_projeto, lista_coluna, usuario_proprietario)"
+				+ " VALUES (?, ?, ?)";
 			
-		} catch(SQLException e) {
-			System.err.println("Falha no banco: " + e.getMessage());
-			e.printStackTrace();
-		} catch(Exception e) {
-			System.err.println("Falha no java: " + e.getMessage());
-			e.printStackTrace();
+			try(PreparedStatement pst = conexao.prepareStatement(create)) {
+				
+				pst.setString(1, projeto.getNomeProjeto());
+				pst.setString(2, projeto.getLista());
+				pst.setString(3, projeto.getUsuarioProprietario().getApelido());
+				
+				pst.execute();
+				
+			} catch(SQLException e) {
+				System.err.println("Falha no banco: " + e.getMessage());
+				e.printStackTrace();
+			} catch(Exception e) {
+				System.err.println("Falha no java: " + e.getMessage());
+				e.printStackTrace();
+			}
 		}
-	}
 	}
 
 	public void updateProjeto(Projeto projeto) throws Exception {
@@ -137,46 +116,25 @@ public class ProjetoDAO {
 	}
 		
 	public int readProjeto(Projeto projeto) throws Exception {
-		String select = " SELECT * FROM projeto WHERE usuario_proprietario = ? or nome_projeto = ?";
+		String select = " SELECT * FROM projeto WHERE usuario_proprietario = ? AND nome_projeto = ?";
         
 
-		PreparedStatement pst = conexao.prepareStatement(select);
-		// vai dar conflito se o usuario tiver mais de um projeto como proprietario?	
-		pst.setString(1, projeto.getUsuarioProprietario().getApelido());
-		pst.setString(2, projeto.getNomeProjeto());
-		pst.execute();
-		ResultSet resultado = pst.executeQuery();
-		String proprietario = resultado.getString("usuario_proprietario");
-		String nomeProjeto = resultado.getString("nome_projeto");
-		if(proprietario.equals(projeto.getUsuarioProprietario().getApelido()) && nomeProjeto.equals(projeto.getNomeProjeto())) {
-			return 3;
+		try (PreparedStatement pst = conexao.prepareStatement(select)) {
+			
+			// vai dar conflito se o usuario tiver mais de um projeto como proprietario?	
+			pst.setString(1, projeto.getUsuarioProprietario().getApelido());
+			pst.setString(2, projeto.getNomeProjeto());
+			pst.execute();
+
+			ResultSet resultado = pst.executeQuery();
+
+			while (resultado.next()) {
+				return 1;
+			}
+		} catch(SQLException ex) {
+			ex.printStackTrace();
 		}
-		else if(!proprietario.equals(projeto.getUsuarioProprietario().getApelido()) && nomeProjeto.equals(projeto.getNomeProjeto())) {
-			return 2;
-		}
-		else if(proprietario.equals(projeto.getUsuarioProprietario().getApelido()) && !nomeProjeto.equals(projeto.getNomeProjeto())) {
-			return 1;
-		}else { 
-			return 0;
-		}
+
+		return 0;
 	}
 }
-//		public boolean readProjeto(Projeto projeto) throws Exception {
-//			String select = " SELECT * FROM projeto WHERE usuario_proprietario = ? and nome_projeto = ?";
-//            
-//
-//			PreparedStatement pst = conexao.prepareStatement(select);
-//			// vai dar conflito se o usuario tiver mais de um projeto como proprietario?	
-//			pst.setString(1, projeto.getUsuarioProprietario().getApelido());
-//			pst.setString(2, projeto.getNomeProjeto());
-//			pst.execute();
-//			ResultSet resultado = pst.executeQuery();
-//			String apelido = resultado.getString("apelido_usuario");
-//			String email = resultado.getString("email_usuario");
-//			if (resultado.next()) {
-//				return true;
-//			} 
-//			
-//			return false;
-//			
-//	}

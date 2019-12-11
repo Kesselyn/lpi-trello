@@ -7,14 +7,6 @@ public class Main {
 
 		// // Criando uma mensaem, passando o id para poder usar na exclusão depois
 		// Mensagem m = new Mensagem(1, u, u2, "oi2", "enviada", null, null);
-
-		// Criando um projeto, o id passado não é usado para cria-lo pois ele é auto icrement, mas sim para usar como FK na tabela tarefa
-		// Projeto p = new Projeto(1,"Times do Brasil", "Em andamento", u2, null, null);
-		
-		// // Criando uma tarefa, o id passado não é usado para cria-lo pois ele é auto icrement, mas sim para usar no delete depois
-		// Tarefa t = new Tarefa(1, "Jogar", "Ganhar esse negocio", 1, "A fazer", "Alto", u, p);
-		
-		//Criando a inserção de um usuario em um projeto, o id é passado para ser usado posteriormente no delete
 		// AlocaUsuarioProjeto a = new AlocaUsuarioProjeto(1, u2, p);
 
 		// try {
@@ -158,6 +150,9 @@ public class Main {
 
 		Login login = new Login();
 		login.iniciar();
+
+		// CriarNovaTarefa ct = new CriarNovaTarefa();
+		// ct.iniciar();
 
 
 	}
