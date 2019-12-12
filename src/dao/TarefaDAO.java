@@ -21,33 +21,33 @@ public class TarefaDAO {
 	/**/
 	
 	public void createTarefa(Tarefa tarefa) throws Exception{
-		if (readTarefa(tarefa.getProjeto()) != null) {
-			throw new Exception(" Essa tarefa já existe !!!");
-		}
-		String create = "INSERT INTO tarefa(titulo_tarefa, descricao_tarefa, nivel_prioridade, estado_tarefa, ordem_tarefa, fk_usuario, fk_projeto)"
-				+ " VALUES (?,?,?,?,?,?,?)";
-		
-		try(PreparedStatement pst = conexao.prepareStatement(create)) {
+		if (verificaTarefa(tarefa) == 2) {
+			throw new Exception(" Essa tarefa já existe neste projeto!!!");
+		} else if(verificaTarefa(tarefa) == 1) {
+			String create = "INSERT INTO tarefa(titulo_tarefa, descricao_tarefa, nivel_prioridade, estado_tarefa, ordem_tarefa, fk_usuario, fk_projeto)"
+					+ " VALUES (?,?,?,?,?,?,?)";
 			
-			pst.setString(1, tarefa.getTitulo());
-			pst.setString(2, tarefa.getDescricao());
-			pst.setString(3, tarefa.getNivelPrioridade());
-			pst.setString(4, tarefa.getEstado());
-			pst.setInt(5, tarefa.getOrdem());
-			pst.setString(6, tarefa.getUsuario().getApelido());
-			pst.setInt(7, tarefa.getProjeto().getIdentificadorProjeto());
+			try(PreparedStatement pst = conexao.prepareStatement(create)) {
+				
+				pst.setString(1, tarefa.getTitulo());
+				pst.setString(2, tarefa.getDescricao());
+				pst.setString(3, tarefa.getNivelPrioridade());
+				pst.setString(4, tarefa.getEstado());
+				pst.setInt(5, tarefa.getOrdem());
+				pst.setString(6, tarefa.getUsuario().getApelido());
+				pst.setInt(7, tarefa.getProjeto().getIdentificadorProjeto());
 
-			pst.execute();
-			
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		catch ( Exception e) {
-			e.printStackTrace();
+				pst.execute();
+				
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+			catch ( Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
 	public void updateTarefa(Tarefa tarefa) {
 		String update = "UPDATE tarefa SET titulo_tarefa = ?, descricao_tarefa = ?, nivel_prioridade = ?, estado_tarefa = ?, ordem_tarefa = ?, fk_usuario = ?, fk_projeto = ? WHERE id_tarefa = ?";
 
@@ -98,16 +98,17 @@ public class TarefaDAO {
 		}
 	}
 
-	public  ArrayList <Tarefa> readTarefa(Projeto projeto) {
-		String consulta = "Select * from tarefa where fk_projeto= ?";
+	public  ArrayList <Tarefa> readTarefa(Projeto projeto, String statusTarefa) {
+		String consulta = "SELECT * FROM tarefa WHERE fk_projeto = ? AND estado_tarefa = ?";
 		
 		try(PreparedStatement pst = conexao.prepareStatement(consulta)){
 			
 			pst.setInt(1, projeto.getIdentificadorProjeto());
+			pst.setString(2, statusTarefa);
 			
 			ResultSet resultado = pst.executeQuery();
 			
-			ArrayList<Tarefa> tarefas = new ArrayList();
+			ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
 			Tarefa tarefa = null;
 			Usuario usuario = null;
 			projeto = null;
@@ -149,5 +150,30 @@ public class TarefaDAO {
         // se acontecer algum problema
         return null;
 				
+	}
+
+	public int verificaTarefa(Tarefa tarefa) throws Exception {
+		String consulta = "SELECT * FROM tarefa WHERE fk_projeto = ? AND titulo_tarefa = ?";
+		
+		try(PreparedStatement pst = conexao.prepareStatement(consulta)){
+			
+			pst.setInt(1, tarefa.getProjeto().getIdentificadorProjeto());
+			pst.setString(2, tarefa.getTitulo());
+			
+			ResultSet resultado = pst.executeQuery();
+			
+			if(resultado.next()) {
+				return 2;		
+			}
+			
+			return 1;
+		}
+		catch (SQLException ex) {
+            // Se acontecer alguma exceção imprima a pilha de erros
+            ex.printStackTrace();
+        }
+        
+        // se acontecer algum problema
+        return 0;
 	}
 }

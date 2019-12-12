@@ -82,10 +82,10 @@ public class UsuarioDAO {
 					ResultSet resultado = pst.executeQuery();
 					
 			if(resultado.next()) {
-				throw new Exception("Email j� cadastrado");
+				throw new Exception("Email já cadastrado");
 			} 
 			else {
-				pst.setString(2, usuario.getEmail()); // caso n�o de  o erro
+				pst.setString(2, usuario.getEmail()); 
 			}
 			// senha
 			if(usuario.getTelefone()== null) {

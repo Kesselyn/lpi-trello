@@ -4,8 +4,17 @@
  * and open the template in the editor.
  */
 package view;
+
+import java.util.ArrayList;
+// import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+
+import dao.TarefaDAO;
+import dao.Conexao;
 import model.Projeto;
 import model.Usuario;
+import model.Tarefa;
 
 /**
  *
@@ -32,23 +41,16 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        jButton4 = new javax.swing.JButton();
         labelNomeDoProjeto = new javax.swing.JLabel();
         btnAdicionarAtividade = new javax.swing.JButton();
         btnConversas = new javax.swing.JButton();
         labelParaFazer = new javax.swing.JLabel();
         labelEmProgresso = new javax.swing.JLabel();
         labelConcluido = new javax.swing.JLabel();
-        painelAtividades = new javax.swing.JPanel();
-        labelAtividade = new javax.swing.JLabel();
-        labelDescricaoDaAtividade = new javax.swing.JLabel();
-        btnPassar = new javax.swing.JButton();
         btnGerenciarUsuarios = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
 
-        jButton4.setText("jButton4");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         labelNomeDoProjeto.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelNomeDoProjeto.setText(projeto.getNomeProjeto());
@@ -78,51 +80,6 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
         labelConcluido.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         labelConcluido.setText("Concluido");
 
-        painelAtividades.setBackground(new java.awt.Color(130, 130, 130));
-
-        labelAtividade.setBackground(new java.awt.Color(255, 255, 255));
-        labelAtividade.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        labelAtividade.setText("Atividade");
-
-        labelDescricaoDaAtividade.setBackground(new java.awt.Color(255, 255, 255));
-        labelDescricaoDaAtividade.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        labelDescricaoDaAtividade.setText("Descrição da atividade");
-
-        btnPassar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnPassar.setText(">");
-        btnPassar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPassarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelAtividadesLayout = new javax.swing.GroupLayout(painelAtividades);
-        painelAtividades.setLayout(painelAtividadesLayout);
-        painelAtividadesLayout.setHorizontalGroup(
-            painelAtividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelAtividadesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelAtividade)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelAtividadesLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnPassar))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelAtividadesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelDescricaoDaAtividade)
-                .addContainerGap())
-        );
-        painelAtividadesLayout.setVerticalGroup(
-            painelAtividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelAtividadesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelAtividade)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelDescricaoDaAtividade)
-                .addGap(18, 18, 18)
-                .addComponent(btnPassar))
-        );
-
         btnGerenciarUsuarios.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnGerenciarUsuarios.setText("Gerenciar usuários");
 
@@ -133,6 +90,105 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
                 btnVoltarActionPerformed(evt);
             }
         });
+
+        TarefaDAO tDAO = new TarefaDAO(Conexao.conectar());
+        ArrayList<Tarefa> tarefasN = tDAO.readTarefa(projeto, "nova");
+        ArrayList<Tarefa> tarefasE = tDAO.readTarefa(projeto, "em andamento");
+        ArrayList<Tarefa> tarefasF = tDAO.readTarefa(projeto, "finalizada");
+        
+        int novaY = 120;
+        for(Tarefa t : tarefasN) { 
+
+            JPanel painel = new JPanel();
+            painel.setLayout(new FlowLayout());
+            painel.setBackground(Color.WHITE);
+            painel.setBounds(10, novaY, 200, 80);
+            
+            JLabel titulo = new JLabel("    " + t.getTitulo());
+            titulo.setPreferredSize(new Dimension(200, 20));
+
+            JLabel descricao = new JLabel("    "  + t.getDescricao());
+            descricao.setPreferredSize(new Dimension(200, 20));
+
+            JButton verEditar = new JButton("Ver/Editar");
+            verEditar.setPreferredSize(new Dimension(85, 25));
+
+            JButton btnPassarR = new JButton(">");
+            btnPassarR.setPreferredSize(new Dimension(35, 25));
+
+            painel.add(titulo);
+            painel.add(descricao);
+            painel.add(verEditar);
+            painel.add(btnPassarR);
+
+            add(painel);
+
+            novaY += 90;
+        }
+
+        int andamentoY = 120;
+        for(Tarefa t : tarefasE) { 
+
+            JPanel painel = new JPanel();
+            painel.setLayout(new FlowLayout());
+            painel.setBackground(Color.WHITE);
+            painel.setBounds(250, andamentoY, 200, 80);
+            
+            JLabel titulo = new JLabel("    " + t.getTitulo());
+            titulo.setPreferredSize(new Dimension(200, 20));
+
+            JLabel descricao = new JLabel("    "  + t.getDescricao());
+            descricao.setPreferredSize(new Dimension(200, 20));
+
+            JButton verEditar = new JButton("Ver/Editar");
+            verEditar.setPreferredSize(new Dimension(85, 25));
+
+            JButton btnPassarR = new JButton(">");
+            btnPassarR.setPreferredSize(new Dimension(35, 25));
+
+            JButton btnPassarL = new JButton("<");
+            btnPassarL.setPreferredSize(new Dimension(35, 25));
+
+            painel.add(titulo);
+            painel.add(descricao);
+            painel.add(btnPassarL);
+            painel.add(verEditar);
+            painel.add(btnPassarR);
+
+            add(painel);
+
+            andamentoY += 90;
+        }
+
+        int finalizadaY = 120;
+        for(Tarefa t : tarefasF) { 
+
+            JPanel painel = new JPanel();
+            painel.setLayout(new FlowLayout());
+            painel.setBackground(Color.WHITE);
+            painel.setBounds(500, finalizadaY, 200, 80);
+            
+            JLabel titulo = new JLabel("    " + t.getTitulo());
+            titulo.setPreferredSize(new Dimension(200, 20));
+
+            JLabel descricao = new JLabel("    "  + t.getDescricao());
+            descricao.setPreferredSize(new Dimension(200, 20));
+
+            JButton verEditar = new JButton("Ver/Editar");
+            verEditar.setPreferredSize(new Dimension(85, 25));
+
+            JButton btnPassarL = new JButton("<");
+            btnPassarL.setPreferredSize(new Dimension(35, 25));
+
+            painel.add(titulo);
+            painel.add(descricao);
+            painel.add(btnPassarL);
+            painel.add(verEditar);
+
+            add(painel);
+
+            finalizadaY += 90;
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,7 +207,6 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(painelAtividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(labelParaFazer)
@@ -183,7 +238,6 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
                     .addComponent(labelEmProgresso)
                     .addComponent(labelConcluido))
                 .addGap(18, 18, 18)
-                .addComponent(painelAtividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConversas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,14 +252,10 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
         CriarNovaTarefa ct = new CriarNovaTarefa(usuario, projeto);
         dispose();
         ct.iniciar();
-    }                                                     
-
-    private void btnPassarActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-    }                                         
+    }                                                                                          
 
     private void btnConversasActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
+        
     }                                            
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {                                          
@@ -249,15 +299,11 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnAdicionarAtividade;
     private javax.swing.JButton btnConversas;
     private javax.swing.JButton btnGerenciarUsuarios;
-    private javax.swing.JButton btnPassar;
     private javax.swing.JButton btnVoltar;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel labelAtividade;
     private javax.swing.JLabel labelConcluido;
-    private javax.swing.JLabel labelDescricaoDaAtividade;
     private javax.swing.JLabel labelEmProgresso;
     private javax.swing.JLabel labelNomeDoProjeto;
     private javax.swing.JLabel labelParaFazer;
-    private javax.swing.JPanel painelAtividades;
+    // private javax.swing.JPanel painelAtividades;
     // End of variables declaration                   
 }

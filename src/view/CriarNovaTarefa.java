@@ -47,27 +47,17 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
         cmbPrioridade = new javax.swing.JComboBox<>();
         cmbStatus = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jtxtTarefaDesc.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jtxtTarefaDesc.setText("Descrição da Atividade");
         jtxtTarefaDesc.setMaximumSize(new java.awt.Dimension(1920, 1920));
         jtxtTarefaDesc.setName(""); // NOI18N
-        jtxtTarefaDesc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtTarefaDescActionPerformed(evt);
-            }
-        });
 
         jtxtTarefaNome.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jtxtTarefaNome.setText("Atividade");
         jtxtTarefaNome.setMaximumSize(new java.awt.Dimension(1920, 1920));
         jtxtTarefaNome.setName(""); // NOI18N
-        jtxtTarefaNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtTarefaNomeActionPerformed(evt);
-            }
-        });
 
         labelPrioridade.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         labelPrioridade.setText("Prioridade:");
@@ -140,20 +130,13 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>                        
-
-    private void jtxtTarefaDescActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
-    }                                              
-
-    private void jtxtTarefaNomeActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
-    }                                              
+    }// </editor-fold>                                                             
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {                                          
-
+        
         Tarefa tarefa = new Tarefa();
-        String nomeTarefa =jtxtTarefaNome.getText();
+
+        String nomeTarefa = jtxtTarefaNome.getText();
         String descTarefa = jtxtTarefaDesc.getText();
         String prioTarefa = (String) cmbPrioridade.getSelectedItem();
         String estadoTarefa = (String) cmbStatus.getSelectedItem();
@@ -162,11 +145,17 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
         tarefa.setDescricao(descTarefa);
         tarefa.setNivelPrioridade(prioTarefa);
         tarefa.setEstado(estadoTarefa);
+        tarefa.setOrdem(1);
+        tarefa.setUsuario(usuario);
+        tarefa.setProjeto(projeto);
 
         TarefaDAO tDAO = new TarefaDAO(Conexao.conectar());
           
         try{
             tDAO.createTarefa(tarefa);
+            dispose();
+            ProjetoPrincipal pp = new ProjetoPrincipal(projeto, usuario);
+            pp.iniciar();
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
@@ -178,7 +167,7 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
     }                                             
 
     private void cmbStatusActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
+        
     }                                         
 
     /**

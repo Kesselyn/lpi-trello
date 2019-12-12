@@ -94,15 +94,15 @@ public class ListaUsuarios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnUsuarioUmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioUmActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnUsuarioUmActionPerformed
 
     private void btnAdicionarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarUsuarioActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnAdicionarUsuarioActionPerformed
 
 

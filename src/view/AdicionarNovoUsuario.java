@@ -73,11 +73,11 @@ public class AdicionarNovoUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUsuarioUmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioUmActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnUsuarioUmActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**

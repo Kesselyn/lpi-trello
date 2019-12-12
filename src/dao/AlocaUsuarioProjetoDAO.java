@@ -85,7 +85,7 @@ public class AlocaUsuarioProjetoDAO {
             
             //Array que vai guardar os dados que eu quero buscar
             //como quero apenas dados do projeto o array será do tipo projeto
-            ArrayList<Projeto> projetos = new ArrayList();
+            ArrayList<Projeto> projetos = new ArrayList<Projeto>();
             
             Projeto projeto = null;
             Usuario usuario = null;
@@ -139,7 +139,7 @@ public class AlocaUsuarioProjetoDAO {
             
             //Array que vai guardar os dados que eu quero buscar
             //como quero apenas dados do projeto o array será do tipo projeto
-            ArrayList<Projeto> projetos = new ArrayList();
+            ArrayList<Projeto> projetos = new ArrayList<Projeto>();
             
             Projeto p = null;
             Usuario usuario = null;
@@ -197,7 +197,7 @@ public class AlocaUsuarioProjetoDAO {
             
             //Array que vai guardar os dados que eu quero buscar
             //como quero apenas dados do projeto o array será do tipo projeto
-            ArrayList<Usuario> usuarios = new ArrayList();
+            ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
             
             Usuario usuario = null;
             
@@ -284,7 +284,7 @@ public class AlocaUsuarioProjetoDAO {
             
             //Array que vai guardar os dados que eu quero buscar
             //como quero apenas dados do projeto o array será do tipo projeto
-            ArrayList<Usuario> usuarios = new ArrayList();
+            ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
             
             Usuario usuario = null;
             

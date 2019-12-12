@@ -84,11 +84,11 @@ public class Contatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnContatoUmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContatoUmActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnContatoUmActionPerformed
 
     private void btnAdicionarContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarContatoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnAdicionarContatoActionPerformed
 
     /**

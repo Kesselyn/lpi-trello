@@ -5,7 +5,6 @@
  */
 package view;
 
-import view.CriarNovoProjeto;
 import javax.swing.JButton;
 import java.util.ArrayList;
 import java.awt.event.*;
@@ -14,6 +13,7 @@ import dao.AlocaUsuarioProjetoDAO;
 import dao.Conexao;
 import model.Usuario;
 import model.Projeto;
+import view.CriarNovoProjeto;
 
 /**
  *

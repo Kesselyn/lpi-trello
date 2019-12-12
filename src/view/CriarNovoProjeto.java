@@ -24,9 +24,7 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
     /**
      * Creates new form CriarNovaTarefa
      */
-    public CriarNovoProjeto() {
-        
-    }
+    
 
     public CriarNovoProjeto(Usuario usuario) {
         this.usuario = usuario;
@@ -102,7 +100,7 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inputNomeDoProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNomeDoProjetoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_inputNomeDoProjetoActionPerformed
 
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
@@ -126,7 +124,7 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void iniciar() {
+    public void iniciar() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -151,12 +149,7 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CriarNovoProjeto().setVisible(true);
-            }
-        });
+        this.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
