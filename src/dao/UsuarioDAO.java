@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.*;
 import java.io.*;
+import java.util.ArrayList;
 
 import model.Usuario;
 
@@ -284,5 +285,65 @@ public class UsuarioDAO {
 			// se acontecer algum problema
 			return null;
 		}
+	}
+
+	public ArrayList<Usuario> readTodosUsuarios(Usuario usuario) throws Exception {
+		String select = "SELECT * FROM usuario WHERE apelido_usuario!=?";
+			
+		try (PreparedStatement pst = conexao.prepareStatement(select)) {
+
+			pst.setString(1, usuario.getApelido());
+			pst.execute();
+
+			ResultSet resultado = pst.executeQuery();
+                        ArrayList<Usuario>usuarios = new ArrayList();
+                        
+                        
+			while (resultado.next()) {
+                                usuario = new Usuario();
+				String apelido = resultado.getString("apelido_usuario");
+                                String nome = resultado.getString("nome_usuario");
+				String email = resultado.getString("email_usuario");
+                                String senha = resultado.getString("senha_usuario");
+                                String telefone = resultado.getString("telefone_usuario");
+                                InputStream input = resultado.getBinaryStream("foto");
+                                
+                                if(telefone != null) {
+						usuario.setTelefone(telefone);
+					}
+                                if(input != null) {
+						File foto = new File("foto_" + apelido + ".jpg");
+						FileOutputStream output = new FileOutputStream(foto);
+						
+						byte[] buffer = new byte[1024];
+						// Enquanto existir conteúdo no fluxo de dados, continua:
+						while (input.read(buffer) > 0) {
+							// Escreve o conteúdo no arquivo de destino no disco:
+							output.write(buffer);
+						}
+		
+						// Fechando a entrada:
+						input.close();
+		
+						// Encerra a saída:
+						output.close();
+
+						usuario.setFoto(foto);
+					}
+                                usuario.setApelido(apelido);
+                                usuario.setNomeUsuario(nome);
+                                usuario.setEmail(email);
+                                System.out.println(usuario.getApelido());
+                                usuarios.add(usuario);
+			}
+			
+                        return usuarios;
+		}
+        catch (SQLException ex) {
+            // Se acontecer alguma exceção imprima a pilha de erros
+            ex.printStackTrace();
+		}
+		
+		return null;
 	}
 }	

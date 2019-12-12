@@ -5,7 +5,7 @@
  */
 package view;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import dao.Conexao;
 import dao.ProjetoDAO;
@@ -49,17 +49,23 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
         inputNomeDoProjeto.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         inputNomeDoProjeto.setMaximumSize(new java.awt.Dimension(1920, 1920));
         inputNomeDoProjeto.setName(""); // NOI18N
-        inputNomeDoProjeto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputNomeDoProjetoActionPerformed(evt);
-            }
-        });
 
         btnCriar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnCriar.setText("Criar");
         btnCriar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCriarActionPerformed(evt);
+            }
+        });
+
+        JButton btnVoltar = new JButton("Voltar");
+        btnVoltar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnVoltar.setBounds(20, 460, 100, 40);
+        add(btnVoltar);
+
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
             }
         });
 
@@ -99,26 +105,31 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void inputNomeDoProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNomeDoProjetoActionPerformed
-        
-    }//GEN-LAST:event_inputNomeDoProjetoActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
+        ListaProjetos listaProjetos = new ListaProjetos(usuario);
+        dispose();
+        listaProjetos.iniciar();
+    }
 
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
         String nomeProjeto = inputNomeDoProjeto.getText();
 
-        projeto.setNomeProjeto(nomeProjeto);
-        projeto.setUsuarioProprietario(usuario);
-        projeto.setLista("");
-
-        ProjetoDAO pDAO = new ProjetoDAO(Conexao.conectar());
-
-        try{
-            pDAO.createProjeto(projeto);
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+        if(nomeProjeto.equals("")) {
+        	JOptionPane.showMessageDialog(null, "O projeto deve ser nomeado.", "Dados Inválidos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            projeto.setNomeProjeto(nomeProjeto);
+            projeto.setUsuarioProprietario(usuario);
+            projeto.setLista("");
+    
+            ProjetoDAO pDAO = new ProjetoDAO(Conexao.conectar());
+    
+            try{
+                pDAO.createProjeto(projeto);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+                e.printStackTrace();
+            }
         }
-
     }
 
     /**

@@ -82,6 +82,11 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
 
         btnGerenciarUsuarios.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnGerenciarUsuarios.setText("Gerenciar usuários");
+        btnGerenciarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerenciarUsuarioActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnVoltar.setText("Voltar");
@@ -330,14 +335,22 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
     }                                                                                          
 
     private void btnConversasActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        
+        Contatos contatos = new Contatos(usuario, projeto);
+        dispose();
+        contatos.iniciar();
     }                                            
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {                                          
         ListaProjetos listaProjetos = new ListaProjetos(usuario);
         dispose();
         listaProjetos.iniciar();
-    }                                         
+    }     
+    
+    private void btnGerenciarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        ListaExcluirUsuario le = new ListaExcluirUsuario(this.usuario, this.projeto);
+        dispose();
+        le.iniciar();
+    }   
 
     /**
      * @param args the command line arguments

@@ -18,39 +18,41 @@ public class AlocaUsuarioProjetoDAO {
         this.conexao = conexao;
     }
 
-    public void createAlocaUsuarioProjeto(AlocaUsuarioProjeto aloca) throws Exception  {
+    public void createAlocaUsuarioProjeto(Projeto p, Usuario u) throws Exception  {
     	
-    	// if (readProjetosUsuario(aloca) != null) {
-		// 	throw new Exception(" Voc� j� est� inserido no projeto !!!");
-		// }
+    	if (readProjetosUsuario(u) == null) {
+			throw new Exception(" Você já está inserido nesse projeto !!!");
+		} else {
+            String create = "INSERT INTO aloca_usuario_projeto(fk_usuario, fk_projeto)"
+                    + " 	VALUES (?, ?)";
+             
+            try(PreparedStatement pst = conexao.prepareStatement(create)) {
+                
+                pst.setString(1, u.getApelido());
+                pst.setInt(2, p.getIdentificadorProjeto());
+                
+                pst.execute();
+            }
+            
+            catch(SQLException e) {
+                System.err.println("Falha no banco: " + e.getMessage());
+                e.printStackTrace();
+            }
+            catch ( Exception e) {
+                System.err.println("Falha no java: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     	
-		String create = "INSERT INTO aloca_usuario_projeto(fk_usuario, fk_projeto)"
-				+ " 	VALUES (?, ?)";
-		 
-		try(PreparedStatement pst = conexao.prepareStatement(create)) {
-			
-			pst.setString(1, aloca.getUsuario().getApelido());
-			pst.setInt(2, aloca.getProjeto().getIdentificadorProjeto());
-			
-			pst.execute();
-		}
-		
-		catch(SQLException e) {
-			System.err.println("Falha no banco: " + e.getMessage());
-			e.printStackTrace();
-		}
-		catch ( Exception e) {
-			System.err.println("Falha no java: " + e.getMessage());
-			e.printStackTrace();
-		}
     }
     
-    public void deleteAlocaUsuarioProjeto(AlocaUsuarioProjeto aloca) {
-		String delete = "DELETE FROM aloca_usuario_projeto WHERE id_aloca_usuario_projeto = ?";
+    public void deleteAlocaUsuarioProjeto(Projeto p, Usuario u) {
+		String delete = "DELETE FROM aloca_usuario_projeto WHERE fk_usuario = ? AND fk_projeto = ?";
 		
 		try(PreparedStatement pst = conexao.prepareStatement(delete)) {
 			
-			pst.setInt(1, aloca.getIdenficiadorAlocaUsuarioProjeto());
+            pst.setString(1, u.getApelido());
+            pst.setInt(2, p.getIdentificadorProjeto());
 			
 			pst.execute();
 		}
@@ -180,17 +182,19 @@ public class AlocaUsuarioProjetoDAO {
         return null;
     }
 
-    public ArrayList <Usuario> readUsuarioProjeto(AlocaUsuarioProjeto alocaUsuarioProjeto) {
-		
+    public ArrayList <Usuario> readUsuarioProjeto(Usuario u, Projeto p) {
+        
         String consulta = "SELECT apelido_usuario, nome_usuario, email_usuario, senha_usuario, telefone_usuario, foto"
                             + " FROM aloca_usuario_projeto AS A"
                             + " INNER JOIN usuario AS U"
                             + " ON A.fk_usuario = U.apelido_usuario"
-                            + " AND fk_projeto = ?";
+                            + " AND fk_projeto = ?"
+                            + " AND apelido_usuario != ?";
         
         try (PreparedStatement pst = conexao.prepareStatement(consulta)) {
             
-            pst.setInt(1, alocaUsuarioProjeto.getProjeto().getIdentificadorProjeto());
+            pst.setInt(1, p.getIdentificadorProjeto());
+            pst.setString(2, u.getApelido());
             
             //executando a busca
             ResultSet resultado = pst.executeQuery();
@@ -271,13 +275,13 @@ public class AlocaUsuarioProjetoDAO {
         return null;
     }
 
-    public ArrayList <Usuario> readUsuarioAusenteProjeto(AlocaUsuarioProjeto alocaUsuarioProjeto) {
+    public ArrayList <Usuario> readUsuarioAusenteProjeto(Projeto p) {
 		
-        String consulta = "SELECT * FROM trello.usuario where apelido_usuario not in (SELECT fk_usuario FROM trello.aloca_usuario_projeto where fk_projeto = ?)";
+        String consulta = "SELECT * FROM trello.usuario WHERE apelido_usuario NOT IN (SELECT fk_usuario FROM trello.aloca_usuario_projeto where fk_projeto = ?)";
         
         try (PreparedStatement pst = conexao.prepareStatement(consulta)) {
             
-            pst.setInt(1, alocaUsuarioProjeto.getProjeto().getIdentificadorProjeto());
+            pst.setInt(1, p.getIdentificadorProjeto());
             
             //executando a busca
             ResultSet resultado = pst.executeQuery();

@@ -74,18 +74,7 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
         });
 
         cmbPrioridade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alta", "Média", "Baixa" }));
-        cmbPrioridade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbPrioridadeActionPerformed(evt);
-            }
-        });
-
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nova", "em andamento", "finalizada" }));
-        cmbStatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbStatusActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,35 +129,37 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
         String descTarefa = jtxtTarefaDesc.getText();
         String prioTarefa = (String) cmbPrioridade.getSelectedItem();
         String estadoTarefa = (String) cmbStatus.getSelectedItem();
-        
-        tarefa.setTitulo(nomeTarefa);
-        tarefa.setDescricao(descTarefa);
-        tarefa.setNivelPrioridade(prioTarefa);
-        tarefa.setEstado(estadoTarefa);
-        tarefa.setOrdem(1);
-        tarefa.setUsuario(usuario);
-        tarefa.setProjeto(projeto);
 
-        TarefaDAO tDAO = new TarefaDAO(Conexao.conectar());
-          
-        try{
-            tDAO.createTarefa(tarefa);
-            dispose();
-            ProjetoPrincipal pp = new ProjetoPrincipal(projeto, usuario);
-            pp.iniciar();
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+        if(nomeTarefa.equals("")) {
+        	JOptionPane.showMessageDialog(null, "A tarefa deve ser nomeada." + "\n Insira um nome ao projeto.", "Dados Inválidos", JOptionPane.ERROR_MESSAGE);
         }
-    }                                         
 
-    private void cmbPrioridadeActionPerformed(java.awt.event.ActionEvent evt) {                                              
-      
-    }                                             
+        else if(descTarefa.equals("")) {
+        	JOptionPane.showMessageDialog(null,  "A tarefa de ter uma descrição.", "Dados Inválidos", JOptionPane.ERROR_MESSAGE);
+        }
 
-    private void cmbStatusActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        
-    }                                         
+        else {
+            tarefa.setTitulo(nomeTarefa);
+            tarefa.setDescricao(descTarefa);
+            tarefa.setNivelPrioridade(prioTarefa);
+            tarefa.setEstado(estadoTarefa);
+            tarefa.setOrdem(1);
+            tarefa.setUsuario(usuario);
+            tarefa.setProjeto(projeto);
+    
+            TarefaDAO tDAO = new TarefaDAO(Conexao.conectar());
+              
+            try{
+                tDAO.createTarefa(tarefa);
+                dispose();
+                ProjetoPrincipal pp = new ProjetoPrincipal(projeto, usuario);
+                pp.iniciar();
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+                e.printStackTrace();
+            }
+        }  
+    }                                                            
 
     /**
      * @param args the command line arguments

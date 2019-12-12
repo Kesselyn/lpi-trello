@@ -186,20 +186,52 @@ public class CadastroUsuario extends javax.swing.JFrame {
         String email = inputEmail.getText();
         String senha = inputSenha.getText();
         String telefone = inputTelefone.getText();
-        
-        usuario.setApelido(apelido);
-        usuario.setNomeUsuario(nome);
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
-        usuario.setTelefone(telefone);
 
-        UsuarioDAO uDAO = new UsuarioDAO(Conexao.conectar());
+        String patternEmail = "(.@.)";
         
-        try {
-            uDAO.createUsuario(usuario);
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+        if(apelido.equals("")) {
+        	JOptionPane.showMessageDialog(null, "O Apelido não pode estar vazio." + "\n Insira no mínimo 3 caracteres.","DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
+        }
+         
+        else if(apelido.length() < 3) {
+        	JOptionPane.showMessageDialog(null, "O apelido deve conter no mínimo 3 caracteres." + "\n Tente Novamente.", "DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
+        }
+       
+        if(nome.equals("")) {
+        	JOptionPane.showMessageDialog(null, "O Nome não pode estar vazio." + "\n Tente Novamente.", "DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
+        }        
+        
+        if(email.equals("")) {
+        	JOptionPane.showMessageDialog(null, "O email não pode estar vazio." + "\n Insira um email válido.", "DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        else if(usuario.getEmail().matches(patternEmail) == false) { 					
+            JOptionPane.showMessageDialog(null, "Email invalido!!" + "\n Confira se o email está correto. ");
+        }
+
+        if(senha.equals("")) {
+        	JOptionPane.showMessageDialog(null, "A senha deve conter no mínimo 3 caracteres." + "\n Insira uma senha válida.", "DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
+        }
+
+        else if(senha.length() < 3) {
+        	JOptionPane.showMessageDialog(null, "A senha deve conter no mínimo 3 caracteres." + "\n Insira uma senha válida.", "DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
+        } 
+        
+        else {
+            usuario.setApelido(apelido);
+            usuario.setNomeUsuario(nome);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+            usuario.setTelefone(telefone);
+    
+            UsuarioDAO uDAO = new UsuarioDAO(Conexao.conectar());
+            
+            try {
+                uDAO.createUsuario(usuario);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+                e.printStackTrace();
+            }
         }
     }                                            
 
