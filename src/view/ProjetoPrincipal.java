@@ -6,7 +6,7 @@
 package view;
 
 import java.util.ArrayList;
-// import java.awt.event.*;
+import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -113,15 +113,36 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             JButton verEditar = new JButton("Ver/Editar");
             verEditar.setPreferredSize(new Dimension(85, 25));
 
-            JButton btnPassarR = new JButton(">");
-            btnPassarR.setPreferredSize(new Dimension(35, 25));
+            JButton btnPassarNA = new JButton(">");
+            btnPassarNA.setPreferredSize(new Dimension(35, 25));
 
             painel.add(titulo);
             painel.add(descricao);
             painel.add(verEditar);
-            painel.add(btnPassarR);
+            painel.add(btnPassarNA);
 
             add(painel);
+
+            verEditar.addActionListener(new ActionListener() { 
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // ProjetoPrincipal pp = new ProjetoPrincipal(p, usuario);
+                    // dispose();
+                    // pp.iniciar();
+                }
+            });
+
+            btnPassarNA.addActionListener(new ActionListener() { 
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    t.setEstado("em andamento");
+                    tDAO.updateTarefa(t);
+
+                    dispose();
+                    ProjetoPrincipal pp = new  ProjetoPrincipal(projeto, usuario);
+                    pp.iniciar();
+                }
+            });
 
             novaY += 90;
         }
@@ -143,19 +164,52 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             JButton verEditar = new JButton("Ver/Editar");
             verEditar.setPreferredSize(new Dimension(85, 25));
 
-            JButton btnPassarR = new JButton(">");
-            btnPassarR.setPreferredSize(new Dimension(35, 25));
+            JButton btnPassarAF = new JButton(">");
+            btnPassarAF.setPreferredSize(new Dimension(35, 25));
 
-            JButton btnPassarL = new JButton("<");
-            btnPassarL.setPreferredSize(new Dimension(35, 25));
+            JButton btnPassarAN = new JButton("<");
+            btnPassarAN.setPreferredSize(new Dimension(35, 25));
 
             painel.add(titulo);
             painel.add(descricao);
-            painel.add(btnPassarL);
+            painel.add(btnPassarAN);
             painel.add(verEditar);
-            painel.add(btnPassarR);
+            painel.add(btnPassarAF);
 
             add(painel);
+
+            verEditar.addActionListener(new ActionListener() { 
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // ProjetoPrincipal pp = new ProjetoPrincipal(p, usuario);
+                    // dispose();
+                    // pp.iniciar();
+                }
+            });
+
+            btnPassarAN.addActionListener(new ActionListener() { 
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    t.setEstado("nova");
+                    tDAO.updateTarefa(t);
+
+                    dispose();
+                    ProjetoPrincipal pp = new  ProjetoPrincipal(projeto, usuario);
+                    pp.iniciar();
+                }
+            });
+
+            btnPassarAF.addActionListener(new ActionListener() { 
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    t.setEstado("finalizada");
+                    tDAO.updateTarefa(t);
+
+                    dispose();
+                    ProjetoPrincipal pp = new  ProjetoPrincipal(projeto, usuario);
+                    pp.iniciar();
+                }
+            });
 
             andamentoY += 90;
         }
@@ -177,15 +231,36 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             JButton verEditar = new JButton("Ver/Editar");
             verEditar.setPreferredSize(new Dimension(85, 25));
 
-            JButton btnPassarL = new JButton("<");
-            btnPassarL.setPreferredSize(new Dimension(35, 25));
+            JButton btnPassarFA = new JButton("<");
+            btnPassarFA.setPreferredSize(new Dimension(35, 25));
 
             painel.add(titulo);
             painel.add(descricao);
-            painel.add(btnPassarL);
+            painel.add(btnPassarFA);
             painel.add(verEditar);
 
             add(painel);
+
+            verEditar.addActionListener(new ActionListener() { 
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // ProjetoPrincipal pp = new ProjetoPrincipal(p, usuario);
+                    // dispose();
+                    // pp.iniciar();
+                }
+            });
+
+            btnPassarFA.addActionListener(new ActionListener() { 
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    t.setEstado("em andamento");
+                    tDAO.updateTarefa(t);
+                    
+                    dispose();
+                    ProjetoPrincipal pp = new  ProjetoPrincipal(projeto, usuario);
+                    pp.iniciar();
+                }
+            });
 
             finalizadaY += 90;
         }
