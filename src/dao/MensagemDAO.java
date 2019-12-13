@@ -3,6 +3,7 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import model.Usuario;
 import model.Mensagem;
@@ -21,17 +22,16 @@ public class MensagemDAO {
 	}
 	
 	public void createMensagem(Mensagem mensagem) {
-		
+            
 		String create = "INSERT INTO mensagem(texto_mensagem, "
 				+ "		estado_mensagem, data_hora_envio, data_hora_visualizacao, remetente, destinatario )"
-				+ " 	VALUES (?, ?, now(), null, ?,?)";
+				+ " 	VALUES (?, 'enviada', now(), null, ?,?)";
 		 
 		try(PreparedStatement pst = conexao.prepareStatement(create)) {
 			
 			pst.setString(1, mensagem.getTexto());
-			pst.setString(2, mensagem.getEstado());
-			pst.setString(3, mensagem.getRemetente().getApelido());
-			pst.setString(4, mensagem.getDestinatario().getApelido());
+			pst.setString(2, mensagem.getRemetente().getApelido());
+			pst.setString(3, mensagem.getDestinatario().getApelido());
 			
 			pst.execute();
 		}
@@ -67,24 +67,22 @@ public class MensagemDAO {
 		}
 	}
 
-	public ArrayList<Mensagem> readMensagemUsuario(Usuario usuario) {
-		String consulta = "SELECT *"
-							+ " FROM mensagem AS M"
-							+ " WHERE M.remetente = ?"
-							+ " OR M.destinatario = ?";
+	public ArrayList<Mensagem> readMensagemUsuario(Usuario usuario, Usuario destinatario) {
+		String consulta = "SELECT * FROM mensagem AS M WHERE M.remetente = ? AND M.destinatario = ? OR M.remetente = ? AND M.destinatario = ?";
 
 		try(PreparedStatement pst = conexao.prepareStatement(consulta)) {
 			pst.setString(1, usuario.getApelido());
-			pst.setString(2, usuario.getApelido());
-
-			ResultSet resultado = pst.executeQuery();
-
+			pst.setString(2, destinatario.getApelido());
+                        pst.setString(3, destinatario.getApelido());
+			pst.setString(4, usuario.getApelido());
+                        
+                        ResultSet resultado = pst.executeQuery();
 			ArrayList<Mensagem> mensagens = new ArrayList<>();
 
 			Mensagem mensagem = null;
 			Usuario remetenteUsuario = null;
 			Usuario destinatarioUsuario = null;
-
+                        
 			while(resultado.next()) {
 				mensagem = new Mensagem();
 				remetenteUsuario = new Usuario();
@@ -96,24 +94,21 @@ public class MensagemDAO {
 				int idMensagem = resultado.getInt("id_mensagem");
 				String texto = resultado.getString("texto_mensagem");
 				String estado = resultado.getString("estado_mensagem");
-				envio.setTime(new java.util.Date(resultado.getDate("data_hora_envio").getTime()));
-				if(resultado.getDate("data_hora_visualizacao") != null) {
-					ver.setTime(new java.util.Date(resultado.getDate("data_hora_visualizacao").getTime()));
+                                envio.setTime(new java.util.Date(resultado.getTimestamp("data_hora_envio").getTime()));
+				if(resultado.getTimestamp("data_hora_visualizacao") != null) {
+					ver.setTime(new java.util.Date(resultado.getTimestamp("data_hora_visualizacao").getTime()));
 					mensagem.setDataHoraVisualizacao(ver);
 				}
-				String remetente = resultado.getString("remetente");
-				String destinatario = resultado.getString("destinatario");
-
+                                String remetente = resultado.getString("remetente");
+				String recebedor = resultado.getString("destinatario");
 				remetenteUsuario.setApelido(remetente);
-				destinatarioUsuario.setApelido(destinatario);
-
+				destinatarioUsuario.setApelido(recebedor);
 				mensagem.setIdentificadorMensagem(idMensagem);
 				mensagem.setTexto(texto);
 				mensagem.setEstado(estado);
 				mensagem.setDataHoraEnvio(envio);
 				mensagem.setRemetente(remetenteUsuario);
 				mensagem.setDestinatario(destinatarioUsuario);
-
 				mensagens.add(mensagem);
 			}
 			return mensagens;
@@ -150,4 +145,8 @@ public class MensagemDAO {
 			e.printStackTrace();
 		}
 	}
+
+    private TimeZone TimeZone(String gmT300) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

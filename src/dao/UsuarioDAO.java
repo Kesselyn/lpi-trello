@@ -216,7 +216,7 @@ public class UsuarioDAO {
 						// Encerra a saída:
 						output.close();
 
-						usuario.setFoto(foto);
+						logUsuario.setFoto(foto);
 					}
 					
 					logUsuario.setApelido(apelido);

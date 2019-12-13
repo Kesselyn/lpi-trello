@@ -27,6 +27,8 @@ public static Projeto projeto;
         initComponents();  
     }
 
+  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,7 +42,6 @@ public static Projeto projeto;
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(1000, 1000));
 
         labelContatos.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelContatos.setText("Contatos");

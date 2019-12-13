@@ -229,6 +229,10 @@ public class CadastroUsuario extends javax.swing.JFrame {
             
             try {
                 uDAO.createUsuario(usuario);
+
+                Login login = new Login();
+                dispose();
+                login.iniciar();
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 e.printStackTrace();
@@ -237,9 +241,9 @@ public class CadastroUsuario extends javax.swing.JFrame {
     }                                            
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // Login login = new Login();
-        // login.iniciar();
-        // dispose();
+        Login login = new Login();
+        dispose();
+        login.iniciar();
     }                                        
 
     /**

@@ -126,6 +126,10 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
     
             try{
                 pDAO.createProjeto(projeto);
+
+                dispose();
+                ListaProjetos lp = new ListaProjetos(usuario);
+                lp.iniciar();
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 e.printStackTrace();

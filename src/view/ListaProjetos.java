@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 import dao.AlocaUsuarioProjetoDAO;
 import dao.Conexao;
@@ -65,11 +67,19 @@ public class ListaProjetos extends javax.swing.JFrame {
         labelNomeDoUsuario.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelNomeDoUsuario.setText(this.usuario.getNomeUsuario());
         
-        // ImageIcon icon = new ImageIcon(usuario.getFoto().getAbsolutePath());
-        // JLabel foto = new JLabel();
-        // foto.setIcon(icon);
-        // foto.setBounds(120, -15, 200, 80);
-        // add(foto);
+        // try{
+            
+        //     JLabel foto = new JLabel();
+        //     ImageIcon image = new ImageIcon(usuario.getFoto().getAbsolutePath());    
+        //     foto.setIcon(image); 
+            
+        //     foto.setBounds(120, 0, 600, 300);
+        //     add(foto);
+
+        // } catch(Exception ex) {
+        //     ex.printStackTrace();
+        // }
+        
 
         JButton editarUsuario = new JButton("Editar Usuário");
         editarUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

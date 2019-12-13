@@ -131,7 +131,7 @@ public class Login extends javax.swing.JFrame {
             dispose();
             listaProjetos.iniciar();
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Aqui" + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
         }
     }                                      
