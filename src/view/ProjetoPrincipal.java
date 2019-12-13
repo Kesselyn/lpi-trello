@@ -41,40 +41,40 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        labelNomeDoProjeto = new javax.swing.JLabel();
-        btnAdicionarAtividade = new javax.swing.JButton();
         btnConversas = new javax.swing.JButton();
         labelParaFazer = new javax.swing.JLabel();
         labelEmProgresso = new javax.swing.JLabel();
         labelConcluido = new javax.swing.JLabel();
-        btnGerenciarUsuarios = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(1000, 1000));
-
+        setMinimumSize(new java.awt.Dimension(760, 600));
+        
+        JLabel labelNomeDoProjeto = new JLabel(projeto.getNomeProjeto());
         labelNomeDoProjeto.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        labelNomeDoProjeto.setBounds(20, 10, 100, 30);
-        labelNomeDoProjeto.setText(projeto.getNomeProjeto());
-
+        labelNomeDoProjeto.setBounds(20, 10, 250, 30);
+        add(labelNomeDoProjeto);
+        
         JButton editarProjeto = new JButton("Editar Projeto");
         editarProjeto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        editarProjeto.setBounds(200, 10, 130, 30);
+        editarProjeto.setBounds(220, 10, 130, 30);
         add(editarProjeto);
         editarProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarProjetoActionPerformed(evt);
             }
         });
-
-        btnAdicionarAtividade.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnAdicionarAtividade.setText("Adicionar atividade");
+        
+        JButton btnAdicionarAtividade = new JButton("Adicionar atividade");
+        btnAdicionarAtividade.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAdicionarAtividade.setBounds(550, 10, 180, 30);
+        add(btnAdicionarAtividade);
         btnAdicionarAtividade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarAtividadeActionPerformed(evt);
             }
         });
-
+        
         btnConversas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnConversas.setText("Conversas");
         btnConversas.addActionListener(new java.awt.event.ActionListener() {
@@ -82,18 +82,20 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
                 btnConversasActionPerformed(evt);
             }
         });
-
+        
         labelParaFazer.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         labelParaFazer.setText("Para fazer");
-
+        
         labelEmProgresso.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         labelEmProgresso.setText("Em progresso");
-
+        
         labelConcluido.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         labelConcluido.setText("Concluido");
-
-        btnGerenciarUsuarios.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnGerenciarUsuarios.setText("Gerenciar usuários");
+        
+        JButton btnGerenciarUsuarios = new JButton("Gerenciar usuários");
+        btnGerenciarUsuarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnGerenciarUsuarios.setBounds(360, 10, 180, 30);
+        add(btnGerenciarUsuarios);
         btnGerenciarUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGerenciarUsuarioActionPerformed(evt);
@@ -143,7 +145,7 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             verEditar.addActionListener(new ActionListener() { 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    EditarTarefa et = new EditarTarefa(t);
+                    EditarTarefa et = new EditarTarefa(t, projeto, usuario);
                     dispose();
                     et.iniciar();
                 }
@@ -198,7 +200,7 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             verEditar.addActionListener(new ActionListener() { 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    EditarTarefa et = new EditarTarefa(t);
+                    EditarTarefa et = new EditarTarefa(t, projeto, usuario);
                     dispose();
                     et.iniciar();
                 }
@@ -261,7 +263,7 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             verEditar.addActionListener(new ActionListener() { 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    EditarTarefa et = new EditarTarefa(t);
+                    EditarTarefa et = new EditarTarefa(t, projeto, usuario);
                     dispose();
                     et.iniciar();
                 }
@@ -292,9 +294,7 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelNomeDoProjeto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
-                                .addComponent(btnGerenciarUsuarios)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -306,7 +306,6 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
                                         .addComponent(labelEmProgresso)))
                                 .addGap(166, 166, 166)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAdicionarAtividade)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(labelConcluido)
                                 .addGap(74, 74, 74))))
@@ -320,10 +319,6 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNomeDoProjeto)
-                    .addComponent(btnAdicionarAtividade)
-                    .addComponent(btnGerenciarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelParaFazer)
@@ -403,14 +398,11 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
 
     }
 
-    // Variables declaration - do not modify                     
-    private javax.swing.JButton btnAdicionarAtividade;
+    // Variables declaration - do not modify 
     private javax.swing.JButton btnConversas;
-    private javax.swing.JButton btnGerenciarUsuarios;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel labelConcluido;
     private javax.swing.JLabel labelEmProgresso;
-    private javax.swing.JLabel labelNomeDoProjeto;
     private javax.swing.JLabel labelParaFazer;
     // private javax.swing.JPanel painelAtividades;
     // End of variables declaration                   

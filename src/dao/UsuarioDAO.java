@@ -98,8 +98,6 @@ public class UsuarioDAO {
 		
 		try(PreparedStatement pst = conexao.prepareStatement(delete)) {
 			
-			System.out.print("Aqui:" + usuario.getApelido());
-
 			pst.setString(1, usuario.getApelido());
 			
 			pst.execute();
@@ -294,14 +292,13 @@ public class UsuarioDAO {
 
 						usuario.setFoto(foto);
 					}
-                                usuario.setApelido(apelido);
-                                usuario.setNomeUsuario(nome);
-                                usuario.setEmail(email);
-                                System.out.println(usuario.getApelido());
-                                usuarios.add(usuario);
+				usuario.setApelido(apelido);
+				usuario.setNomeUsuario(nome);
+				usuario.setEmail(email);
+				usuarios.add(usuario);
 			}
 			
-                        return usuarios;
+            return usuarios;
 		}
         catch (SQLException ex) {
             // Se acontecer alguma exceção imprima a pilha de erros

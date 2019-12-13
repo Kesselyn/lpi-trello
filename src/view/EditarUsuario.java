@@ -262,7 +262,7 @@ public class EditarUsuario extends javax.swing.JFrame {
         ListaProjetos lp = new ListaProjetos(usuario);
         dispose();
         lp.iniciar();
-    }                                          
+    }                                      
 
     /**
      * @param args the command line arguments

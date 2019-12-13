@@ -5,6 +5,7 @@
  */
 package view;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import dao.Conexao;
@@ -49,6 +50,17 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1000, 1000));
+
+        JButton btnVoltar = new JButton("Voltar");
+        btnVoltar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnVoltar.setBounds(20, 500, 100, 40);
+        add(btnVoltar);
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
 
         jtxtTarefaDesc.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jtxtTarefaDesc.setText("Descrição da Atividade");
@@ -160,7 +172,13 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }  
-    }                                                            
+    }                 
+    
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+        ProjetoPrincipal pp = new ProjetoPrincipal(this.projeto, this.usuario);
+        dispose();
+        pp.iniciar();
+    }
 
     /**
      * @param args the command line arguments

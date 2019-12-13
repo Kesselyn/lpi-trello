@@ -10,17 +10,23 @@ import javax.swing.JOptionPane;
 import dao.Conexao;
 import dao.TarefaDAO;
 import model.Tarefa;
+import model.Usuario;
+import model.Projeto;;
 /**
  *
  * @author vitor
  */
 public class EditarTarefa extends javax.swing.JFrame {
     public static Tarefa tarefa;
+    public static Projeto projeto;
+    public static Usuario usuario;
     /**
      * Creates new form EditarTarefa
      */
-    public EditarTarefa(Tarefa t) {
+    public EditarTarefa(Tarefa t, Projeto p, Usuario u) {
         this.tarefa = t;
+        this.projeto = p;
+        this.usuario = u;
         initComponents();
     }
 
@@ -147,13 +153,19 @@ public class EditarTarefa extends javax.swing.JFrame {
     }// </editor-fold>                                            
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        ProjetoPrincipal pp = new ProjetoPrincipal(tarefa.getProjeto(), tarefa.getUsuario());
+        ProjetoPrincipal pp = new ProjetoPrincipal(projeto, usuario);
         dispose();
         pp.iniciar();
     }                                         
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
+        TarefaDAO tDAO = new TarefaDAO(Conexao.conectar());
+        tDAO.deleteTarefa(tarefa);
+        dispose();
+
+        ProjetoPrincipal pp = new ProjetoPrincipal(projeto, usuario);
+        dispose();
+        pp.iniciar();
     }                                          
 
     private void btnEditar2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
@@ -170,7 +182,7 @@ public class EditarTarefa extends javax.swing.JFrame {
             TarefaDAO tDAO = new TarefaDAO(Conexao.conectar());
             tDAO.updateTarefa(tarefa);
 
-            ProjetoPrincipal pp = new ProjetoPrincipal(tarefa.getProjeto(), tarefa.getUsuario());
+            ProjetoPrincipal pp = new ProjetoPrincipal(projeto, usuario);
             dispose();
             pp.iniciar();
         }

@@ -121,16 +121,17 @@ public class Login extends javax.swing.JFrame {
 
         usuario.setApelido(apelido);
         usuario.setSenha(senha);
-
+        
         UsuarioDAO uDAO = new UsuarioDAO(Conexao.conectar());
 
         try {
             usuario = uDAO.loginUsuario(usuario);
+            
             ListaProjetos listaProjetos = new ListaProjetos(usuario);
             dispose();
             listaProjetos.iniciar();
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Aqui" + e.getMessage());
             e.printStackTrace();
         }
     }                                      
@@ -169,12 +170,7 @@ public class Login extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
+        this.setVisible(true);
     }
 
     // Variables declaration - do not modify                     

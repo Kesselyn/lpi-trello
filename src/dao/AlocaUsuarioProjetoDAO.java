@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.*;
-import model.AlocaUsuarioProjeto;
 import model.Projeto;
 import model.Usuario;
 import java.util.ArrayList;
