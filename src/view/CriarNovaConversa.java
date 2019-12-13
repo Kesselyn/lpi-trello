@@ -36,6 +36,7 @@ public class CriarNovaConversa extends javax.swing.JFrame {
         btnPassar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1000, 1000));
 
         labelContatos.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelContatos.setText("Contato 1");

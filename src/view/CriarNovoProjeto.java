@@ -45,6 +45,7 @@ public class CriarNovoProjeto extends javax.swing.JFrame {
         labelDigiteoNomeDoProjeto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1000, 1000));
 
         inputNomeDoProjeto.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         inputNomeDoProjeto.setMaximumSize(new java.awt.Dimension(1920, 1920));

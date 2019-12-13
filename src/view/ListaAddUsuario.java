@@ -44,6 +44,7 @@ public class ListaAddUsuario extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1000, 1000));
 
         labelUsuarios.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelUsuarios.setText("Usuários");

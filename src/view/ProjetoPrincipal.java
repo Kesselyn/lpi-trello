@@ -51,9 +51,21 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1000, 1000));
 
         labelNomeDoProjeto.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        labelNomeDoProjeto.setBounds(20, 10, 100, 30);
         labelNomeDoProjeto.setText(projeto.getNomeProjeto());
+
+        JButton editarProjeto = new JButton("Editar Projeto");
+        editarProjeto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        editarProjeto.setBounds(200, 10, 130, 30);
+        add(editarProjeto);
+        editarProjeto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarProjetoActionPerformed(evt);
+            }
+        });
 
         btnAdicionarAtividade.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnAdicionarAtividade.setText("Adicionar atividade");
@@ -131,9 +143,9 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             verEditar.addActionListener(new ActionListener() { 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // ProjetoPrincipal pp = new ProjetoPrincipal(p, usuario);
-                    // dispose();
-                    // pp.iniciar();
+                    EditarTarefa et = new EditarTarefa(t);
+                    dispose();
+                    et.iniciar();
                 }
             });
 
@@ -186,9 +198,9 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             verEditar.addActionListener(new ActionListener() { 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // ProjetoPrincipal pp = new ProjetoPrincipal(p, usuario);
-                    // dispose();
-                    // pp.iniciar();
+                    EditarTarefa et = new EditarTarefa(t);
+                    dispose();
+                    et.iniciar();
                 }
             });
 
@@ -249,9 +261,9 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
             verEditar.addActionListener(new ActionListener() { 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // ProjetoPrincipal pp = new ProjetoPrincipal(p, usuario);
-                    // dispose();
-                    // pp.iniciar();
+                    EditarTarefa et = new EditarTarefa(t);
+                    dispose();
+                    et.iniciar();
                 }
             });
 
@@ -328,11 +340,18 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
+    private void btnEditarProjetoActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+        EditarProjeto ep = new  EditarProjeto(this.usuario, this.projeto);
+        dispose();
+        ep.iniciar();
+    }                                                                                     
+
+
     private void btnAdicionarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {                                                      
         CriarNovaTarefa ct = new CriarNovaTarefa(usuario, projeto);
         dispose();
         ct.iniciar();
-    }                                                                                          
+    }                                                                                     
 
     private void btnConversasActionPerformed(java.awt.event.ActionEvent evt) {                                             
         Contatos contatos = new Contatos(usuario, projeto);
@@ -356,6 +375,7 @@ public class ProjetoPrincipal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public void iniciar() {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

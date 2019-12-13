@@ -6,28 +6,27 @@
 package view;
 
 import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import dao.AlocaUsuarioProjetoDAO;
 import dao.Conexao;
 import dao.UsuarioDAO;
 import model.Usuario;
-
 /**
  *
  * @author vitor
  */
-public class CadastroUsuario extends javax.swing.JFrame {
-
-    Usuario usuario = new Usuario();
-
+public class EditarUsuario extends javax.swing.JFrame {
+    public static Usuario usuario;
     /**
-     * Creates new form CadastroUsuario
+     * Creates new form EditarUsuario
      */
-    public CadastroUsuario() {
+    public EditarUsuario(Usuario u) {
+        this.usuario = u;
         initComponents();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,38 +37,47 @@ public class CadastroUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        inputEmail = new javax.swing.JTextField();
+        labelNome = new javax.swing.JLabel();
         inputNome = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        inputNome.setText(usuario.getNomeUsuario());
+
+        labelEmail = new javax.swing.JLabel();
+        inputEmail = new javax.swing.JTextField();
+        inputEmail.setText(usuario.getEmail());
+
+        labelSenha = new javax.swing.JLabel();
         inputSenha = new javax.swing.JTextField();
-        inputApelido = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        inputSenha.setText(usuario.getSenha());
+
+        labelTelefone = new javax.swing.JLabel();
         inputTelefone = new javax.swing.JTextField();
+        inputTelefone.setText(usuario.getTelefone());
+
+        labelEditar = new javax.swing.JLabel();
         btnUpload = new javax.swing.JButton();
-        btnLogin = new javax.swing.JButton();
-        btnCadastrar = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        labelApelido = new javax.swing.JLabel();
+        btnEditar = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
+        labelApelidoDoUsuario = new javax.swing.JLabel();
+        btnVoltar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1000, 1000));
-        
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel1.setText("Apelido");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel2.setText("Nome");
+        labelEditar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        labelEditar.setText("Editar");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel3.setText("Email");
+        labelNome.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        labelNome.setText("Nome");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel4.setText("Senha");
+        labelEmail.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        labelEmail.setText("Email");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel5.setText("Telefone");
+        labelSenha.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        labelSenha.setText("Senha");
+
+        labelTelefone.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        labelTelefone.setText("Telefone");
 
         btnUpload.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnUpload.setText("Fazer upload da foto");
@@ -79,96 +87,107 @@ public class CadastroUsuario extends javax.swing.JFrame {
             }
         });
 
-        btnLogin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnLogin.setText("Login");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        labelApelido.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        labelApelido.setText("Apelido");
+
+        btnEditar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
-        btnCadastrar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnCadastrar.setText("Cadastrar");
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarActionPerformed(evt);
+                btnDeletarActionPerformed(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel6.setText("Cadastro");
+        labelApelidoDoUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelApelidoDoUsuario.setText(usuario.getApelido());
+
+        btnVoltar1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnVoltar1.setText("Voltar");
+        btnVoltar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(175, 175, 175)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCadastrar)
+                        .addComponent(btnVoltar1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDeletar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnLogin))
+                        .addComponent(btnEditar))
+                    .addComponent(btnUpload, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(inputSenha, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputTelefone, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnUpload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputSenha)
-                            .addComponent(inputEmail)
-                            .addComponent(inputTelefone)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4)
-                                    .addComponent(inputApelido, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(inputNome, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))))))
+                            .addComponent(labelApelido)
+                            .addComponent(labelEmail)
+                            .addComponent(labelTelefone)
+                            .addComponent(labelSenha)
+                            .addComponent(labelApelidoDoUsuario))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inputNome, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelNome))))
                 .addGap(152, 152, 152))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addComponent(labelEditar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addComponent(labelEditar)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(labelApelido)
+                    .addComponent(labelNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inputApelido, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputNome, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputNome, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelApelidoDoUsuario))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addComponent(labelEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addComponent(labelSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(labelTelefone)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(inputTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin)
-                    .addComponent(btnCadastrar))
+                    .addComponent(btnEditar)
+                    .addComponent(btnDeletar)
+                    .addComponent(btnVoltar1))
                 .addGap(21, 21, 21))
         );
 
         pack();
-    }// </editor-fold>                                                                    
+    }// </editor-fold>                                             
 
     private void btnUploadActionPerformed(java.awt.event.ActionEvent evt) {                                          
         JFileChooser file = new JFileChooser();
@@ -181,22 +200,13 @@ public class CadastroUsuario extends javax.swing.JFrame {
         }
     }                                         
 
-    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        String apelido = inputApelido.getText();
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {
         String nome = inputNome.getText();
         String email = inputEmail.getText();
         String senha = inputSenha.getText();
         String telefone = inputTelefone.getText();
 
-        String patternEmail = "(.@.)";
-        
-        if(apelido.equals("")) {
-        	JOptionPane.showMessageDialog(null, "O Apelido não pode estar vazio." + "\n Insira no mínimo 3 caracteres.","DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
-        }
-         
-        else if(apelido.length() < 3) {
-        	JOptionPane.showMessageDialog(null, "O apelido deve conter no mínimo 3 caracteres." + "\n Tente Novamente.", "DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
-        }
+        // String patternEmail = "(.@.)";
        
         if(nome.equals("")) {
         	JOptionPane.showMessageDialog(null, "O Nome não pode estar vazio." + "\n Tente Novamente.", "DADOS INVÁLIDOS", JOptionPane.ERROR_MESSAGE);
@@ -219,7 +229,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
         } 
         
         else {
-            usuario.setApelido(apelido);
             usuario.setNomeUsuario(nome);
             usuario.setEmail(email);
             usuario.setSenha(senha);
@@ -228,19 +237,32 @@ public class CadastroUsuario extends javax.swing.JFrame {
             UsuarioDAO uDAO = new UsuarioDAO(Conexao.conectar());
             
             try {
-                uDAO.createUsuario(usuario);
+                uDAO.updateUsuario(usuario);
+                ListaProjetos lp = new ListaProjetos(usuario);
+                dispose();
+                lp.iniciar();
+                
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 e.printStackTrace();
             }
         }
-    }                                            
+    }                                         
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        UsuarioDAO uDAO = new UsuarioDAO(Conexao.conectar());
+        uDAO.deleteUsuario(usuario);
+
+        dispose();
         Login login = new Login();
         login.iniciar();
+    }                                          
+
+    private void btnVoltar1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        ListaProjetos lp = new ListaProjetos(usuario);
         dispose();
-    }                                        
+        lp.iniciar();
+    }                                          
 
     /**
      * @param args the command line arguments
@@ -259,38 +281,34 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroUsuario().setVisible(true);
-            }
-        });
+        this.setVisible(true);
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnDeletar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnUpload;
-    private javax.swing.JTextField inputApelido;
+    private javax.swing.JButton btnVoltar1;
     private javax.swing.JTextField inputEmail;
     private javax.swing.JTextField inputNome;
     private javax.swing.JTextField inputSenha;
     private javax.swing.JTextField inputTelefone;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel labelApelido;
+    private javax.swing.JLabel labelApelidoDoUsuario;
+    private javax.swing.JLabel labelEditar;
+    private javax.swing.JLabel labelEmail;
+    private javax.swing.JLabel labelNome;
+    private javax.swing.JLabel labelSenha;
+    private javax.swing.JLabel labelTelefone;
     // End of variables declaration                   
 }

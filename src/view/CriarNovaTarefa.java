@@ -48,6 +48,7 @@ public class CriarNovaTarefa extends javax.swing.JFrame {
         cmbStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1000, 1000));
 
         jtxtTarefaDesc.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jtxtTarefaDesc.setText("Descrição da Atividade");

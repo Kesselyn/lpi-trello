@@ -5,7 +5,7 @@
  */
 package view;
 
-import javax.swing.JButton;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.awt.event.*;
 
@@ -49,10 +49,24 @@ public class ListaProjetos extends javax.swing.JFrame {
         btnNovoProjeto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1000, 1000));
 
         labelNomeDoUsuario.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelNomeDoUsuario.setText(this.usuario.getNomeUsuario());
         
+        JLabel foto = new JLabel("Ah");
+        foto.setBounds(120, -15, 200, 80);
+        add(foto);
+
+        JButton editarUsuario = new JButton("Editar Usuário");
+        editarUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        editarUsuario.setBounds(250, 10, 130, 40);
+        add(editarUsuario);
+        editarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarUsuarioActionPerformed(evt);
+            }
+        });
 
         btnNovoProjeto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnNovoProjeto.setText("Novo Projeto");
@@ -144,14 +158,20 @@ public class ListaProjetos extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>   
+
+    private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        EditarUsuario eu = new EditarUsuario(this.usuario);
+        dispose();
+        eu.iniciar();        
+    }                              
 
     private void btnNovoProjetoActionPerformed(java.awt.event.ActionEvent evt) {                                               
         CriarNovoProjeto criarProjeto = new CriarNovoProjeto(this.usuario);
         dispose();
         criarProjeto.iniciar();
         
-    }                                              
+    }                                  
 
     /**
      * @param args the command line arguments

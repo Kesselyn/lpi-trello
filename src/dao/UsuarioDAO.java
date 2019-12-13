@@ -61,58 +61,22 @@ public class UsuarioDAO {
 	}
 
 	public void updateUsuario(Usuario usuario) throws Exception {
-		String update = "UPDATE usuario SET nome_usuario = ?, email_usuario = ?, senha_usuario=?, telefone_usuario=?, foto=?  WHERE apelido_usuario = ?";
+		String update = "UPDATE usuario SET nome_usuario = ?, email_usuario = ?, senha_usuario = ?, telefone_usuario = ?, foto = ?  WHERE apelido_usuario = ?";
 		
 		try(PreparedStatement pst = conexao.prepareStatement(update)) {
-			//nome
-			FileInputStream inputStream = new FileInputStream(usuario.getFoto());
 			
-			if(usuario.getNomeUsuario() == null) {
-					throw new Exception(" Informe um novo nome!!!");
-			}else {
-					pst.setString(1, usuario.getNomeUsuario());
-			}
-			//email
-			if(usuario.getEmail() == null) {
-				throw new Exception(" Informe um email!!!");
-			}
-					String selectEmail = " email_usuario FROM usuario WHERE email_usuario LIKE(?);";
-					conexao.prepareStatement(selectEmail); 
-					pst.setString(1, usuario.getEmail());
-					pst.execute();
-					ResultSet resultado = pst.executeQuery();
-					
-			if(resultado.next()) {
-				throw new Exception("Email já cadastrado");
-			} 
-			else {
-				pst.setString(2, usuario.getEmail()); 
-			}
-			// senha
-			if(usuario.getTelefone()== null) {
-				throw new Exception(" Informe um nova senha!!!");
-			}
-				String selectSenha = " senha_usuario FROM usuario WHERE senha_usuario LIKE(?);";
-				conexao.prepareStatement(selectSenha); 
-				pst.setString(1, usuario.getSenha());
-				pst.execute();
-				ResultSet resultadoSenha = pst.executeQuery();
-				
-			if(resultadoSenha.next()) {
-				throw new Exception("SENHA J� CADASTRADA");
-			} 
-			else {
-				pst.setString(3, usuario.getSenha());
-			}
-			// telefone
-			if(usuario.getTelefone()== null) {
-				throw new Exception(" Informe um novo telefone!!!");
-			}
-			else {
-				pst.setString(4, usuario.getTelefone());
-			}
+			if(usuario.getFoto() != null) {
+				FileInputStream inputStream = new FileInputStream(usuario.getFoto());
 				pst.setBinaryStream(5, (InputStream) inputStream, (int) (usuario.getFoto().length()));
-				pst.setString(6, usuario.getApelido());
+			} else {
+				pst.setBinaryStream(5, null);
+			}
+			
+			pst.setString(1, usuario.getNomeUsuario());
+			pst.setString(2, usuario.getEmail()); 
+			pst.setString(3, usuario.getSenha());
+			pst.setString(4, usuario.getTelefone());
+			pst.setString(6, usuario.getApelido());
 
 			int linhasAfetadas = pst.executeUpdate();
 			System.out.println("Done! Rows affected: " + linhasAfetadas);

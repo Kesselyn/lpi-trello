@@ -31,6 +31,7 @@ public class AdicionarNovoUsuario extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1000, 1000));
 
         btnUsuarioUm.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnUsuarioUm.setText("Usuário 2");

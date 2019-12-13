@@ -50,33 +50,10 @@ public class ProjetoDAO {
 		String update = "UPDATE projeto SET nome_projeto = ?, lista_coluna = ?, usuario_proprietario = ?  WHERE id_projeto = ?";
 		//nome projeto
 		try(PreparedStatement pst = conexao.prepareStatement(update)) {
-			if(projeto.getNomeProjeto()== null) {
-				throw new Exception("Informe um novo nome de projeto");
-			}
-			String selectProjeto = " nome_projeto FROM projeto WHERE nome_projeto LIKE(?);";
-			conexao.prepareStatement(selectProjeto); 
-			pst.execute();
-			ResultSet resultado = pst.executeQuery();
 			
-			if(resultado.next()) {
-				throw new Exception("Nome de projeto j� cadastrado");
-			} 
-			else {
-				pst.setString(1, projeto.getNomeProjeto());
-			}
-			// lista
-			if(projeto.getLista()== null) {
-					throw new Exception("Insira uma Lista");
-			}else {
-				pst.setString(2, projeto.getLista());
-			}
-			//proprietario
-			if(projeto.getUsuarioProprietario().getApelido()==null) {
-				throw new Exception("Insira apelido do novo propriet�rio");
-			}else {
-				pst.setString(3, projeto.getUsuarioProprietario().getApelido());	
-			}
-			
+			pst.setString(1, projeto.getNomeProjeto());
+			pst.setString(2, projeto.getLista());
+			pst.setString(3, projeto.getUsuarioProprietario().getApelido());	
 			pst.setInt(4, projeto.getIdentificadorProjeto());
 
 			int linhasAfetadas = pst.executeUpdate();
@@ -95,7 +72,7 @@ public class ProjetoDAO {
 	}
 
 	public void deleteProjeto(Projeto projeto) {
-		String delete = " DELETE FROM projeto WHERE id_projeto = ?";
+		String delete = "DELETE FROM projeto WHERE id_projeto = ?";
 		
 		try(PreparedStatement pst = conexao.prepareStatement(delete)) {
 			
