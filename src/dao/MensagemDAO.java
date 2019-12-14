@@ -25,7 +25,7 @@ public class MensagemDAO {
             
 		String create = "INSERT INTO mensagem(texto_mensagem, "
 				+ "		estado_mensagem, data_hora_envio, data_hora_visualizacao, remetente, destinatario )"
-				+ " 	VALUES (?, 'enviada', now(), null, ?,?)";
+				+ " 	VALUES (?, 'lida', now(), null, ?,?)";
 		 
 		try(PreparedStatement pst = conexao.prepareStatement(create)) {
 			
